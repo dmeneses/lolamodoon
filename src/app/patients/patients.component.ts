@@ -18,7 +18,7 @@ export class PatientsComponent implements OnInit {
       {
         title: 'Agregar Paciente',
         iconName: 'person_add',
-        routerLink: 'new',
+        routerLink: 'create',
       },
     ]
   }

@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { PatientsComponent } from './patients.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { LolaLayoutModule } from '../shared/layout/lola-layout.module';
+import { CreateComponent } from './create/create.component';
 
 const routes = [
   {
@@ -14,13 +15,17 @@ const routes = [
       {
         path: '',
         component: ListComponent
+      },
+      {
+        path: 'create',
+        component: CreateComponent
       }
     ]
   }
 ];
 
 @NgModule({
-  declarations: [ListComponent, PatientsComponent],
+  declarations: [ListComponent, PatientsComponent, CreateComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
