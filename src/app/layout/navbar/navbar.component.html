@@ -1,0 +1,16 @@
+<nav class="lola-navbar-header">
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <a mat-button class="docs-button" routerLink="/" aria-label="Lola Modo On">
+        <img class="lola-navbar-logo"
+             src="../../../assets/images/lola-logo.jpeg"
+             alt="logo">
+        <span class="mat-h1">Lola Modo On</span>
+      </a>
+
+      <a mat-button class="docs-navbar-hide-small docs-button"
+        *ngFor="let key of sectionKeys"
+        [routerLink]="key">{{sections[key].name}}</a>
+    </mat-toolbar-row>
+  </mat-toolbar>
+</nav>
