@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+
 import { SidebarMenu } from '../shared/models/sidebar-menu';
 
 @Component({
@@ -21,7 +22,8 @@ export class PatientsComponent implements OnInit {
         routerLink: 'create',
       },
     ]
-  }
+  };
+
   constructor() { }
 
   ngOnInit(): void {

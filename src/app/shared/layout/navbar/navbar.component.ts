@@ -9,10 +9,10 @@ export class NavbarComponent implements OnInit {
 
   sections = {
     patients: {
-      name: "Pacientes",
+      name: 'Pacientes',
     },
     foods: {
-      name: "Alimentos",
+      name: 'Alimentos',
     }
   };
 
