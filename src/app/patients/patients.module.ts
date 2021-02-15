@@ -4,9 +4,7 @@ import { ListComponent } from './list/list.component';
 import { RouterModule } from '@angular/router';
 import { PatientsComponent } from './patients.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list';
-import { MatIconModule } from '@angular/material/icon';
+import { LolaLayoutModule } from '../shared/layout/lola-layout.module';
 
 const routes = [
   {
@@ -27,9 +25,7 @@ const routes = [
     CommonModule,
     RouterModule.forChild(routes),
     MatToolbarModule,
-    MatSidenavModule,
-    MatListModule,
-    MatIconModule,
+    LolaLayoutModule,
   ]
 })
 export class PatientsModule { }

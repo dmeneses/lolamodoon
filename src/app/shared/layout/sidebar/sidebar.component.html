@@ -1,0 +1,14 @@
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="side" opened>
+    <mat-nav-list >
+      <mat-list-item *ngFor="let sidebarItem of sidebarMenu.items" [routerLink]="[sidebarItem.routerLink]">
+        <span>{{sidebarItem.title}}</span>
+        <mat-icon mat-list-icon>{{sidebarItem.iconName}}</mat-icon>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>
