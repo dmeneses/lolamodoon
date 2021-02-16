@@ -8,6 +8,12 @@ import { ViewComponent } from './view/view.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { LolaLayoutModule } from '../shared/layout/lola-layout.module';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatTableModule } from '@angular/material/table';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const routes = [
   {
@@ -35,7 +41,14 @@ const routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
+    ReactiveFormsModule,
     MatToolbarModule,
+    MatIconModule,
+    MatTableModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
     FlexLayoutModule,
     LolaLayoutModule,
   ]
