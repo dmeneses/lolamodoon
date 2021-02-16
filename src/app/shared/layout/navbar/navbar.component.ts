@@ -13,6 +13,9 @@ export class NavbarComponent implements OnInit {
     },
     foods: {
       name: 'Alimentos',
+    },
+    diets: {
+      name: 'Dietas',
     }
   };
 
