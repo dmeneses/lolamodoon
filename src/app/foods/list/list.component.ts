@@ -9,7 +9,7 @@ import { FoodMock } from '../../shared/models/mocks/food-mock';
 })
 export class ListComponent implements OnInit {
 
-  displayedColumns: string[] = ['name', 'protein', 'carbohydrate', 'fat', 'fiber', 'calories', 'actions',];
+  displayedColumns: string[] = ['name', 'protein', 'carbohydrate', 'fat', 'fiber', 'calories', 'options',];
   dataSource = FoodMock;
 
   searchForm = new FormGroup({
