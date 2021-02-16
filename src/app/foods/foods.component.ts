@@ -18,7 +18,7 @@ export class FoodsComponent implements OnInit {
       {
         title: 'Agregar Alimento',
         iconName: 'person_add',
-        routerLink: 'create',
+        routerLink: '/foods/create',
       },
     ]
   };

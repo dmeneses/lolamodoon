@@ -1,7 +1,7 @@
 <mat-sidenav-container>
   <mat-sidenav #sidenav mode="side" opened>
     <mat-nav-list>
-      <mat-list-item *ngFor="let sidebarItem of sidebarMenu.items" [routerLink]="[sidebarItem.routerLink]">
+      <mat-list-item *ngFor="let sidebarItem of sidebarMenu.items" [routerLink]="[sidebarItem.routerLink]" [routerLinkActive]="['is-active']" [routerLinkActiveOptions]="{exact: true}">
         <span>{{sidebarItem.title}}</span>
         <mat-icon mat-list-icon>{{sidebarItem.iconName}}</mat-icon>
       </mat-list-item>

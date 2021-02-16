@@ -14,12 +14,12 @@ export class PatientsComponent implements OnInit {
       {
         title: 'Lista de Pacientes',
         iconName: 'format_list_bulleted',
-        routerLink: '',
+        routerLink: '/patients',
       },
       {
         title: 'Agregar Paciente',
         iconName: 'person_add',
-        routerLink: 'create',
+        routerLink: '/patients/create',
       },
     ]
   };

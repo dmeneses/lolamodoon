@@ -1,3 +1,5 @@
+@import '~@angular/material/theming';
+
 $primary-palette: (
     50 : #ece6ef,
     100 : #d0c0d8,
@@ -30,3 +32,39 @@ $primary-palette: (
         A700 : #ffffff,
     )
 );
+
+$secondary-palette: (
+    50 : #e9efe6,
+    100 : #c8d8c0,
+    200 : #a4be96,
+    300 : #7fa46c,
+    400 : #63914d,
+    500 : #487d2d,
+    600 : #417528,
+    700 : #386a22,
+    800 : #30601c,
+    900 : #214d11,
+    A100 : #a3ff86,
+    A200 : #7dff53,
+    A400 : #56ff20,
+    A700 : #43ff07,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);;
+
+$primary-color: mat-color($primary-palette, 500);
+$accent-color: mat-color($secondary-palette, 500);

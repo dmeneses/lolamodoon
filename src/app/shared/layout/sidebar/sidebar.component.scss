@@ -1,3 +1,9 @@
+@import '../../../../styles-variables.scss';
+
 .lola-sidebar-content {
   margin: 15px;
+}
+
+.is-active {
+  background-color: $accent-color !important;
 }
