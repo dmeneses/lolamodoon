@@ -1,1 +1,82 @@
-<p>create works!</p>
+<div fxLayout="row" fxLayoutAlign="center center">
+  <form fxLayout="column" [formGroup]="createFoodForm" (submit)="submit()">
+    <mat-form-field class="form-field" appearance="outline">
+      <mat-label> Name </mat-label>
+      <input matInput formControlName="name">
+      <mat-error *ngIf="createFoodForm.controls.name.touched || createFoodForm.controls.name.invalid">
+        <span *ngIf="createFoodForm.controls.name.errors.required">El campo es obligatorio.</span>
+        <span *ngIf="createFoodForm.controls.name.errors.pattern">El campo es inválido.</span>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-field" appearance="outline">
+      <mat-label> Descripción </mat-label>
+      <textarea matInput formControlName="description"></textarea>
+      <mat-error *ngIf="createFoodForm.controls.description.touched || createFoodForm.controls.description.invalid">
+        <span *ngIf="createFoodForm.controls.description.errors.required">El campo es obligatorio.</span>
+        <span *ngIf="createFoodForm.controls.description.errors.pattern">El campo es inválido.</span>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-field" appearance="outline">
+      <mat-label> Proteína </mat-label>
+      <input matInput formControlName="protein">
+      <mat-error *ngIf="createFoodForm.controls.protein.touched || createFoodForm.controls.protein.invalid">
+        <span *ngIf="createFoodForm.controls.protein.errors.required">El campo es obligatorio.</span>
+        <span *ngIf="createFoodForm.controls.protein.errors.pattern">El campo es inválido.</span>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-field" appearance="outline">
+      <mat-label> Carbohidrato </mat-label>
+      <input matInput formControlName="carbohydrate">
+      <mat-error *ngIf="createFoodForm.controls.carbohydrate.touched || createFoodForm.controls.carbohydrate.invalid">
+        <span *ngIf="createFoodForm.controls.carbohydrate.errors.required">El campo es obligatorio.</span>
+        <span *ngIf="createFoodForm.controls.carbohydrate.errors.pattern">El campo es inválido.</span>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-field" appearance="outline">
+      <mat-label> Grasa </mat-label>
+      <input matInput formControlName="fat">
+      <mat-error *ngIf="createFoodForm.controls.fat.touched || createFoodForm.controls.fat.invalid">
+        <span *ngIf="createFoodForm.controls.fat.errors.required">El campo es obligatorio.</span>
+        <span *ngIf="createFoodForm.controls.fat.errors.pattern">El campo es inválido.</span>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-field" appearance="outline">
+      <mat-label> Fibra </mat-label>
+      <input matInput formControlName="fiber">
+      <mat-error *ngIf="createFoodForm.controls.fiber.touched || createFoodForm.controls.fiber.invalid">
+        <span *ngIf="createFoodForm.controls.fiber.errors.required">El campo es obligatorio.</span>
+        <span *ngIf="createFoodForm.controls.fiber.errors.pattern">El campo es inválido.</span>
+      </mat-error>
+    </mat-form-field>
+
+    <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label> Cantidad </mat-label>
+        <input matInput formControlName="servingSize">
+        <mat-error *ngIf="createFoodForm.controls.servingSize.touched || createFoodForm.controls.servingSize.invalid">
+          <span *ngIf="createFoodForm.controls.servingSize.errors.required">El campo es obligatorio.</span>
+          <span *ngIf="createFoodForm.controls.servingSize.errors.pattern">El campo es inválido.</span>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label> Unidad </mat-label>
+        <input matInput formControlName="servingSizeUnit">
+        <mat-error *ngIf="createFoodForm.controls.servingSizeUnit.touched || createFoodForm.controls.servingSizeUnit.invalid">
+          <span *ngIf="createFoodForm.controls.servingSizeUnit.errors.required">El campo es obligatorio.</span>
+          <span *ngIf="createFoodForm.controls.servingSizeUnit.errors.pattern">El campo es inválido.</span>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <button mat-raised-button color="basic" type="submit">Cancel</button>
+      <button mat-raised-button color="primary" type="submit">Save</button>
+    </div>
+  </form>
+</div>

@@ -1,6 +1,6 @@
 <mat-sidenav-container>
   <mat-sidenav #sidenav mode="side" opened>
-    <mat-nav-list >
+    <mat-nav-list>
       <mat-list-item *ngFor="let sidebarItem of sidebarMenu.items" [routerLink]="[sidebarItem.routerLink]">
         <span>{{sidebarItem.title}}</span>
         <mat-icon mat-list-icon>{{sidebarItem.iconName}}</mat-icon>
@@ -9,6 +9,8 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <ng-content></ng-content>
+    <div class="lola-sidebar-content">
+      <ng-content></ng-content>
+    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
