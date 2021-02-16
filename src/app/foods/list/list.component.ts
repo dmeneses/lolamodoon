@@ -1,17 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-
-export interface Food {
-  name: string;
-  description?: string;
-  protein: number;
-  carbohydrate: number;
-  fat: number;
-  fiber: number;
-  calories: number;
-  servingSize: number;
-  servingSizeUnit: string;
-}
+import { Food } from '../../shared/models/food';
 
 const ELEMENT_DATA: Food[] = [
   {
