@@ -1,16 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-export interface Patient {
-  name: string;
-  lastname: string;
-  birthDate: Date;
-  targetCalories: number;
-  basalMetabolism: number;
-  estimatedDailyEnergyExpenditure: number,
-}
+import { Patient } from '../../shared/models/patient';
 
 const ELEMENT_DATA: Patient[] = [
   {
+    patientId: '1',
     name: 'Juan',
     lastname: 'Perez',
     birthDate: new Date(),
@@ -19,6 +13,7 @@ const ELEMENT_DATA: Patient[] = [
     estimatedDailyEnergyExpenditure: 2400,
   },
   {
+    patientId: '2',
     name: 'Pedro',
     lastname: 'Perez',
     birthDate: new Date(),
@@ -27,6 +22,7 @@ const ELEMENT_DATA: Patient[] = [
     estimatedDailyEnergyExpenditure: 2400,
   },
   {
+    patientId: '3',
     name: 'Juan',
     lastname: 'Alcazar',
     birthDate: new Date(),
@@ -35,6 +31,7 @@ const ELEMENT_DATA: Patient[] = [
     estimatedDailyEnergyExpenditure: 2400,
   },
   {
+    patientId: '4',
     name: 'Mario',
     lastname: 'Perez',
     birthDate: new Date(),
@@ -43,6 +40,7 @@ const ELEMENT_DATA: Patient[] = [
     estimatedDailyEnergyExpenditure: 2400,
   },
   {
+    patientId: '5',
     name: 'Juan',
     lastname: 'Peredo',
     birthDate: new Date(),

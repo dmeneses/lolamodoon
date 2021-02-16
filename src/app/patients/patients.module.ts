@@ -15,6 +15,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { ViewComponent } from './view/view.component';
 
 const routes = [
   {
@@ -28,13 +29,17 @@ const routes = [
       {
         path: 'create',
         component: CreateComponent
+      },
+      {
+        path: ':id',
+        component: ViewComponent
       }
     ]
   }
 ];
 
 @NgModule({
-  declarations: [ListComponent, PatientsComponent, CreateComponent],
+  declarations: [ListComponent, PatientsComponent, CreateComponent, ViewComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
