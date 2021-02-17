@@ -2,6 +2,7 @@ import { Food } from '../food';
 
 export const FoodMock: Food[] = [
   {
+    foodId: '1',
     name: 'Pechuga de Pollo',
     protein: 20,
     carbohydrate: 0,
@@ -12,6 +13,7 @@ export const FoodMock: Food[] = [
     servingSizeUnit: 'grams',
   },
   {
+    foodId: '2',
     name: 'Palta',
     protein: 1.2,
     carbohydrate: 5.1,
@@ -22,6 +24,7 @@ export const FoodMock: Food[] = [
     servingSizeUnit: 'grams'
   },
   {
+    foodId: '3',
     name: 'Choclo Blanco Crudo',
     protein: 4.29,
     carbohydrate: 36.1,

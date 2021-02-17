@@ -1,0 +1,39 @@
+<span class="mat-title">Añadir Alimento</span>
+
+<form fxLayout="column" fxLayoutAlign="start start" [formGroup]="form">
+  <mat-form-field>
+    <mat-label>Alimento</mat-label>
+    <input type="text"
+           placeholder="Seleccione uno..."
+           aria-label="Alimento"
+           matInput
+           formControlName="foodId"
+           [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="showFood.bind(this)">
+      <mat-option *ngFor="let food of filteredFoods | async" [value]="food.foodId">
+        {{food.name}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <mat-form-field class="form-field" appearance="outline">
+    <mat-label> Cantidad </mat-label>
+    <input matInput formControlName="servingSize">
+    <mat-error *ngIf="form.controls.servingSize.touched || form.controls.servingSize.invalid">
+      <span *ngIf="form.controls.servingSize.errors?.required">El campo es obligatorio.</span>
+      <span *ngIf="form.controls.servingSize.errors?.pattern">El campo es inválido.</span>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="form-field" appearance="outline">
+    <mat-label>Tipo</mat-label>
+    <mat-select formControlName="foodType">
+      <mat-option *ngFor="let type of foodTypes" [value]="type">
+        {{getFoodTypeName(type)}}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="form.get('foodType').hasError('required')">
+      El campo es obligatorio.
+    </mat-error>
+  </mat-form-field>
+</form>
+
+<button mat-raised-button color="primary" (click)="addFood()">Añadir</button>

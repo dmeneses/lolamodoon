@@ -14,7 +14,12 @@ export interface DietSection {
 
 export interface DietFood {
   food?: Food;
-  calories: number;
+  protein?: number;
+  carbohydrate?: number;
+  fat?: number;
+  fiber?: number;
+  calories?: number;
+  foodType?: string;
   servingSize: number;
   servingSizeUnit: string;
 }

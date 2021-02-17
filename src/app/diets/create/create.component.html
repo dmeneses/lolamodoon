@@ -1,1 +1,95 @@
-<p>create works!</p>
+<div fxLayout="column" fxLayoutGap="30px">
+  <div fxLayout="column">
+    <div fxLayoutAlign="space-between start">
+      <span class="mat-title">Pacientes Asignados</span>
+      <button mat-raised-button color="primary" (click)="addPatient()">Añadir Paciente</button>
+    </div>
+    <mat-expansion-panel expanded>
+      <div *ngIf="patients.length === 0" style="padding-top: 20px;">
+        <span class="mat-subheading-2">No existen pacientes asignados a esta dieta.</span>
+      </div>
+      <mat-selection-list #pacients>
+        <mat-list-option *ngFor="let pacient of patients">
+          {{pacient.name}} {{pacient.lastname}}
+        </mat-list-option>
+      </mat-selection-list>
+    </mat-expansion-panel>
+  </div>
+  <div fxLayout="column">
+    <div fxLayoutAlign="space-between start">
+      <span class="mat-title">Secciones de Alimentos</span>
+      <button mat-raised-button color="primary" (click)="addSection()">Añadir Sección de Alimentos</button>
+    </div>
+    <div>
+      <mat-accordion multi>
+        <mat-expansion-panel expanded *ngFor="let section of sections; let i = index">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <span class="mat-title">{{section.name}}</span>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div *ngIf="section.foods.length === 0" style="padding-top: 20px;">
+            <span class="mat-subheading-2">No existen alimentos asignados a esta sección.</span>
+          </div>
+          <div fxLayout="column" fxLayoutAlign="start stretch" *ngIf="section.foods.length > 0">
+            <table mat-table [dataSource]="section.foods" class="mat-elevation-z8">
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                <td mat-cell *matCellDef="let element"> {{element.food.name}} </td>
+              </ng-container>
+          
+              <ng-container matColumnDef="servingSize">
+                <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+                <td mat-cell *matCellDef="let element"> {{element.servingSize}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="protein">
+                <th mat-header-cell *matHeaderCellDef> Proteína </th>
+                <td mat-cell *matCellDef="let element"> {{element.protein | number: '1.2-2'}} </td>
+              </ng-container>
+          
+              <ng-container matColumnDef="carbohydrate">
+                <th mat-header-cell *matHeaderCellDef> Carbohidrato </th>
+                <td mat-cell *matCellDef="let element"> {{element.carbohydrate | number: '1.2-2'}} </td>
+              </ng-container>
+          
+              <ng-container matColumnDef="fat">
+                <th mat-header-cell *matHeaderCellDef> Grasa </th>
+                <td mat-cell *matCellDef="let element"> {{element.fat | number: '1.2-2'}} </td>
+              </ng-container>
+          
+              <ng-container matColumnDef="fiber">
+                <th mat-header-cell *matHeaderCellDef> Fibra </th>
+                <td mat-cell *matCellDef="let element"> {{element.fiber | number: '1.2-2'}} </td>
+              </ng-container>
+          
+              <ng-container matColumnDef="calories">
+                <th mat-header-cell *matHeaderCellDef> Calorías </th>
+                <td mat-cell *matCellDef="let element"> {{element.calories | number: '1.2-2'}} </td>
+              </ng-container>
+          
+              <ng-container matColumnDef="options">
+                <th mat-header-cell *matHeaderCellDef>Opciones</th>
+                <td mat-cell *matCellDef="let element">
+                  <div fxLayout="row" fxLayoutGap="10px">
+                    <mat-icon color="primary">delete</mat-icon>
+                  </div>
+                </td>
+              </ng-container>
+          
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                [class.protein-color]="row.foodType==='protein'"
+                [class.carbohydrate-color]="row.foodType==='carbohydrate'"
+                [class.fat-color]="row.foodType==='fat'"></tr>
+            </table>
+          </div>
+          <mat-action-row>
+            <button mat-raised-button color="primary" (click)="addFoodToSection(i)">Agregar Alimento</button>
+            <button mat-raised-button color="warn" (click)="deleteSection(i)">Eliminar Sección</button>
+          </mat-action-row>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </div>
+</div>

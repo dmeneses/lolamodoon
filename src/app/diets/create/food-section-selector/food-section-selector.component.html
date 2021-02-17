@@ -1,0 +1,13 @@
+<span class="mat-title">Crear Sección</span>
+
+<form [formGroup]="form">
+  <mat-form-field>
+    <mat-label>Nombre de la sección</mat-label>
+    <input type="text"
+           aria-label="Sección"
+           matInput
+           formControlName="sectionName">
+  </mat-form-field>
+</form>
+
+<button mat-raised-button color="primary" (click)="addSection()">Añadir</button>

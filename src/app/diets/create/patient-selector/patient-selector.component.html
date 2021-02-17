@@ -1,0 +1,20 @@
+<span class="mat-title">Añadir Paciente</span>
+
+<form [formGroup]="form">
+  <mat-form-field>
+    <mat-label>Paciente</mat-label>
+    <input type="text"
+           placeholder="Seleccione uno..."
+           aria-label="Paciente"
+           matInput
+           formControlName="patientId"
+           [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="showPatient.bind(this)">
+      <mat-option *ngFor="let patient of filteredPatients | async" [value]="patient.patientId">
+        {{patient.name}} {{patient.lastname}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</form>
+
+<button mat-raised-button color="primary" (click)="addPatient()">Añadir</button>

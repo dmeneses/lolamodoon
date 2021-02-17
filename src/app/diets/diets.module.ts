@@ -13,7 +13,16 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatListModule } from '@angular/material/list';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatSelectModule } from '@angular/material/select';
+import { PatientSelectorComponent } from './create/patient-selector/patient-selector.component';
+import { FoodSelectorComponent } from './create/food-selector/food-selector.component';
+import { FoodSectionSelectorComponent } from './create/food-section-selector/food-section-selector.component';
+
 
 const routes = [
   {
@@ -37,10 +46,11 @@ const routes = [
 ];
 
 @NgModule({
-  declarations: [DietsComponent, ListComponent, CreateComponent, ViewComponent],
+  declarations: [DietsComponent, ListComponent, CreateComponent, ViewComponent, PatientSelectorComponent, FoodSelectorComponent, FoodSectionSelectorComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
+    FormsModule,
     ReactiveFormsModule,
     MatToolbarModule,
     MatIconModule,
@@ -49,6 +59,11 @@ const routes = [
     MatInputModule,
     MatButtonModule,
     MatIconModule,
+    MatExpansionModule,
+    MatListModule,
+    MatBottomSheetModule,
+    MatAutocompleteModule,
+    MatSelectModule,
     FlexLayoutModule,
     LolaLayoutModule,
   ]
