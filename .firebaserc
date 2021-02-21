@@ -1,0 +1,18 @@
+{
+  "targets": {
+    "lolamodoon-adc3b": {
+      "hosting": {
+        "lolamodoon": [
+          "lolamodoon-adc3b"
+        ]
+      }
+    },
+    "lolamodoon-production": {
+      "hosting": {
+        "lolamodoon": [
+          "lolamodoon-production"
+        ]
+      }
+    }
+  }
+}
