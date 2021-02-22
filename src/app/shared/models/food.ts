@@ -1,13 +1,13 @@
 
 export interface Food {
-  foodId?: string;
+  id?: string;
   name: string;
   description?: string;
   protein: number;
   carbohydrate: number;
   fat: number;
   fiber: number;
-  calories: number;
+  calories?: number;
   servingSize: number;
   servingSizeUnit: string;
 }

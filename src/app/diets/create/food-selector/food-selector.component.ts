@@ -37,7 +37,7 @@ export class FoodSelectorComponent implements OnInit {
 
   showFood(foodId: string) {
     if (foodId) {
-      const { name } = this.foods.find(food => foodId === food.foodId);
+      const { name } = this.foods.find(food => foodId === food.id);
       return `${name}`;
     }
 
@@ -46,7 +46,7 @@ export class FoodSelectorComponent implements OnInit {
 
   addFood() {
     const { foodId, servingSize, servingSizeUnit, foodType } = this.form.getRawValue();
-    const food = this.foods.find(food => foodId === food.foodId);
+    const food = this.foods.find(food => foodId === food.id);
     const { protein, carbohydrate, fat, fiber } = food;
     const originalServingSize = food.servingSize;
     const dietFood = { 

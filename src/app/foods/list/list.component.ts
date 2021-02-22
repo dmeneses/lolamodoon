@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { Food } from 'src/app/shared/models/food';
 import { FoodMock } from '../../shared/models/mocks/food-mock';
+import { FoodsService } from '../services/foods.service';
 
 @Component({
   selector: 'app-list',
@@ -10,15 +13,20 @@ import { FoodMock } from '../../shared/models/mocks/food-mock';
 export class ListComponent implements OnInit {
 
   displayedColumns: string[] = ['name', 'protein', 'carbohydrate', 'fat', 'fiber', 'calories', 'options',];
-  dataSource = FoodMock;
+  loading$: Observable<boolean>;
+  foods$: Observable<Food[]>;
+  noResults$: Observable<boolean>;
 
   searchForm = new FormGroup({
     search: new FormControl('')
   });
 
-  constructor() { }
+  constructor(private foodService: FoodsService) { }
 
   ngOnInit(): void {
+    this.loading$ = this.foodService.loading$;
+    this.noResults$ = this.foodService.noResults$;
+    this.foods$ = this.foodService.foods$;
   }
 
 }
