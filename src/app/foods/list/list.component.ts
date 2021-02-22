@@ -28,5 +28,4 @@ export class ListComponent implements OnInit {
     this.noResults$ = this.foodService.noResults$;
     this.foods$ = this.foodService.foods$;
   }
-
 }

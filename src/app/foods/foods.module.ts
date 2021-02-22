@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTableModule } from '@angular/material/table';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { ListComponent } from './list/list.component';
 import { FoodsComponent } from './foods.component';
@@ -45,6 +46,7 @@ const routes = [
     MatInputModule,
     MatButtonModule,
     MatIconModule,
+    MatProgressSpinnerModule,
     FlexLayoutModule,
     LolaLayoutModule,
     CaloriesCalculatorModule,
