@@ -11,15 +11,17 @@ export class NavbarComponent implements OnInit {
   @Input() displayMenus: boolean = false;
 
   sections = {
-    patients: {
-      name: 'Pacientes',
-    },
+    // TODO: Enable view when database connection is set 
+    // patients: {
+    //   name: 'Pacientes',
+    // },
     foods: {
       name: 'Alimentos',
     },
-    diets: {
-      name: 'Dietas',
-    }
+    // TODO: Enable view when database connection is set 
+    // diets: {
+    //   name: 'Dietas',
+    // }
   };
 
   sectionKeys = Object.keys(this.sections);
