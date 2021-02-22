@@ -12,7 +12,7 @@ export class LoginComponent {
 
   form: FormGroup;
   public loginInvalid: boolean;
-  public togglePasswordDisplay = false;
+  public togglePasswordDisplay = true;
   private formSubmitAttempt: boolean;
 
   constructor(
@@ -24,16 +24,10 @@ export class LoginComponent {
   }
 
   async ngOnInit() {
-    // this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/game';
-
     this.form = this.formBuilder.group({
       email: ['', Validators.email],
       password: ['', Validators.required]
     });
-
-    // if (await this.authService.checkAuthenticated()) {
-    //   await this.router.navigate([this.returnUrl]);
-    // }
   }
 
   async onSubmit() {
@@ -44,7 +38,7 @@ export class LoginComponent {
       try {
         const { email, password } = this.form.getRawValue();
         const user = await this.authService.login(email, password);
-        console.log(user);
+        this.router.navigate(['foods']);
       } catch (err) {
         this.loginInvalid = true;
       }
@@ -52,5 +46,4 @@ export class LoginComponent {
       this.formSubmitAttempt = true;
     }
   }
-  
 }

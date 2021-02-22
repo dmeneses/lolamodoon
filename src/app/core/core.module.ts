@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { AuthGuard } from './auth.guard';
 
 @NgModule({
   declarations: [ LoginComponent ],
@@ -21,7 +22,8 @@ import { MatInputModule } from '@angular/material/input';
     MatInputModule,
   ],
   providers: [
-    AuthService
+    AuthService,
+    AuthGuard,
   ],
   exports: [ LoginComponent ]
 })

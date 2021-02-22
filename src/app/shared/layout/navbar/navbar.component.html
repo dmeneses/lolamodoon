@@ -7,8 +7,13 @@
       <span class="mat-h1">Lola Modo On</span>
     </a>
 
+    <div *ngIf="displayMenus">
     <a mat-button
       *ngFor="let key of sectionKeys"
       [routerLink]="key">{{sections[key].name}}</a>
+    
+    <a mat-button
+      (click)="onLogoutClick()">Salir</a>
+    </div>
   </mat-toolbar-row>
 </mat-toolbar>

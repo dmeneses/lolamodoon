@@ -1,10 +1,10 @@
 <mat-card>
   <mat-card-content>
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <form [formGroup]="form">
       <div fxLayout="column">
         <h2>Log In</h2>
-        <mat-error *ngIf="loginInvalid">
-          The username and password were not recognised
+        <mat-error *ngIf="loginInvalid" style="padding-top: 10px; padding-bottom: 10px;">
+          El correo electrónico o la contraseña no son válidos.
         </mat-error>
 
         <mat-form-field appearance="outline">
@@ -20,7 +20,7 @@
         </mat-form-field>
 
         <div>
-          <button mat-raised-button color="primary">Login</button>
+          <button mat-raised-button color="primary" (click)="onSubmit()">Iniciar Sesión</button>
         </div>
       </div>
     </form>
