@@ -36,7 +36,7 @@
 
     <ng-container matColumnDef="calories">
       <th mat-header-cell *matHeaderCellDef> Calorías </th>
-      <td mat-cell *matCellDef="let element"> {{element.calories}} </td>
+      <td mat-cell *matCellDef="let element"> {{element | caloriesCalculator}} </td>
     </ng-container>
 
     <ng-container matColumnDef="options">

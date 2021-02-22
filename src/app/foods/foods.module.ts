@@ -14,6 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { CaloriesCalculatorModule } from '../shared/calories-calculator/calories-calculator.module';
 
 const routes = [
   {
@@ -46,6 +47,7 @@ const routes = [
     MatIconModule,
     FlexLayoutModule,
     LolaLayoutModule,
+    CaloriesCalculatorModule,
   ]
 })
 export class FoodsModule { }
