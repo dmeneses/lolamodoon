@@ -7,7 +7,10 @@ export interface Food {
   carbohydrate: number;
   fat: number;
   fiber: number;
-  calories?: number;
   servingSize: number;
   servingSizeUnit: string;
+  createdDate?: Date;
+  updatedDate?: Date;
+  createdBy?: string;
+  updatedBy?: string;
 }

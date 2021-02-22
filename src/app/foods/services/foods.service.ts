@@ -39,8 +39,8 @@ export class FoodsService {
       this.filter$,
     ]).pipe(
       map(([foods, filter]) => {
-        return foods.filter(employee => {
-          return employee.name === filter.name
+        return foods.filter(food => {
+          return food.name === filter.name
         })
       })
     )
@@ -66,20 +66,32 @@ export class FoodsService {
     return this.store.state$.pipe(map(state => state.totalFoods))
   }
 
-  create(employee: Food) {
-    this.store.patch({ loading: true, foods: [], formStatus: 'Saving...' }, "employee create")
-    return this.firestore.create(employee).then(_ => {
-      this.store.patch({ formStatus: 'Saved!' }, "employee create SUCCESS")
-      setTimeout(() => this.store.patch({ formStatus: '' }, "employee create timeout reset formStatus"), 2000)
+  create(food: Food) {
+    this.store.patch({ loading: true, foods: [], formStatus: 'Saving...' }, "food create")
+
+    return this.firestore.create(food).then(_ => {
+      this.store.patch({ formStatus: 'Saved!' }, "food create SUCCESS")
+      setTimeout(() => this.store.patch({ formStatus: '' }, "food create timeout reset formStatus"), 2000)
     }).catch(err => {
-      this.store.patch({ loading: false, formStatus: 'An error ocurred' }, "employee create ERROR")
+      this.store.patch({ loading: false, formStatus: 'An error ocurred' }, "food create ERROR")
+    })
+  }
+
+  update(food: Food) {
+    this.store.patch({ loading: true, foods: [], formStatus: 'Updating...' }, "food update")
+
+    return this.firestore.update(food.id, food).then(_ => {
+      this.store.patch({ formStatus: 'Saved!' }, "food create SUCCESS")
+      setTimeout(() => this.store.patch({ formStatus: '' }, "food update timeout reset formStatus"), 2000)
+    }).catch(err => {
+      this.store.patch({ loading: false, formStatus: 'An error ocurred' }, "food update ERROR")
     })
   }
 
   delete(id: string): any {
-    this.store.patch({ loading: true, foods: [] }, "employee delete")
+    this.store.patch({ loading: true, foods: [] }, "food delete")
     return this.firestore.delete(id).catch(err => {
-      this.store.patch({ loading: false, formStatus: 'An error ocurred' }, "employee delete ERROR")
+      this.store.patch({ loading: false, formStatus: 'An error ocurred' }, "food delete ERROR")
     })
   }
 }

@@ -8,7 +8,6 @@ export const FoodMock: Food[] = [
     carbohydrate: 0,
     fat: 1.88,
     fiber: 0,
-    calories: 147.4,
     servingSize: 100,
     servingSizeUnit: 'grams',
   },
@@ -19,7 +18,6 @@ export const FoodMock: Food[] = [
     carbohydrate: 5.1,
     fat: 8.8,
     fiber: 4.02,
-    calories: 104.4,
     servingSize: 100,
     servingSizeUnit: 'grams'
   },
@@ -30,7 +28,6 @@ export const FoodMock: Food[] = [
     carbohydrate: 36.1,
     fat: 1.04,
     fiber: 3.51,
-    calories: 170.92,
     servingSize: 100,
     servingSizeUnit: 'grams'
   },
