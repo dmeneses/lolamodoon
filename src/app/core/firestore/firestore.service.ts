@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@angular/core";
 import { AngularFirestore, QueryFn } from "@angular/fire/firestore";
 import { Observable } from "rxjs";
-import { tap } from "rxjs/operators";
+import { map, tap } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 
 @Injectable()
@@ -28,7 +28,14 @@ export abstract class FirestoreService<T> {
   }
 
   collection$(queryFn?: QueryFn): Observable<T[]> {
-    return this.firestore.collection<T>(`${this.basePath}`, queryFn).valueChanges().pipe(
+    return this.firestore.collection(`${this.basePath}`, queryFn).snapshotChanges().pipe(
+      map(actions => {       
+        return actions.map(a => {
+          const data = a.payload.doc.data() as any;
+          data.id = a.payload.doc.id;
+          return data;
+        });
+      }),
       tap(r => {
         if (!environment.production) {
           console.groupCollapsed(`Firestore Streaming [${this.basePath}] [collection$]`)
@@ -37,6 +44,16 @@ export abstract class FirestoreService<T> {
         }
       }),
     );
+    // TODO: reevaluate this if there is a form to get the id in the model
+    // return this.firestore.collection<T>(`${this.basePath}`, queryFn).valueChanges().pipe(
+    //   tap(r => {
+    //     if (!environment.production) {
+    //       console.groupCollapsed(`Firestore Streaming [${this.basePath}] [collection$]`)
+    //       console.table(r)
+    //       console.groupEnd()
+    //     }
+    //   }),
+    // );
   }
 
   create(value: T) {

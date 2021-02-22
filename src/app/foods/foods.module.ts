@@ -16,6 +16,7 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { CaloriesCalculatorModule } from '../shared/calories-calculator/calories-calculator.module';
+import { MatCardModule } from '@angular/material/card';
 
 const routes = [
   {
@@ -28,6 +29,14 @@ const routes = [
       },
       {
         path: 'create',
+        component: CreateComponent
+      },
+      {
+        path: ':id/edit',
+        component: CreateComponent
+      },
+      {
+        path: ':id',
         component: CreateComponent
       }
     ]
@@ -47,6 +56,7 @@ const routes = [
     MatButtonModule,
     MatIconModule,
     MatProgressSpinnerModule,
+    MatCardModule,
     FlexLayoutModule,
     LolaLayoutModule,
     CaloriesCalculatorModule,
