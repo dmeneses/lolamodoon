@@ -1,5 +1,5 @@
 <div fxLayout="column" fxLayoutAlign="start stretch">
-  <div fxLayout="row" fxLayoutAlign="start start">
+  <!-- <div fxLayout="row" fxLayoutAlign="start start">
     <form [formGroup]="searchForm">
       <mat-form-field>
         <mat-label>Buscar Alimento...</mat-label>
@@ -7,7 +7,7 @@
         <mat-icon matSuffix>search</mat-icon>
       </mat-form-field>
     </form>
-  </div>
+  </div> -->
   <div fxLayout="row" fxLayoutAlign="center center">
     <mat-spinner *ngIf="(loading$ | async) === true"></mat-spinner>
   </div>
