@@ -15,7 +15,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { ViewComponent } from './view/view.component';
+import { PatientsService } from './services/patients.service';
+import { PatientsPageStoreService } from './services/patients-page.store.service';
+import { PatientsFirestoreService } from './services/patients.firestore.service';
 
 const routes = [
   {
@@ -31,15 +33,19 @@ const routes = [
         component: CreateComponent
       },
       {
+        path: ':id/edit',
+        component: CreateComponent
+      },
+      {
         path: ':id',
-        component: ViewComponent
+        component: CreateComponent
       }
     ]
   }
 ];
 
 @NgModule({
-  declarations: [ListComponent, PatientsComponent, CreateComponent, ViewComponent],
+  declarations: [ListComponent, PatientsComponent, CreateComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
@@ -54,6 +60,11 @@ const routes = [
     MatDatepickerModule,
     FlexLayoutModule,
     LolaLayoutModule,
+  ],
+  providers: [
+    PatientsService,
+    PatientsPageStoreService,
+    PatientsFirestoreService,
   ]
 })
 export class PatientsModule { }

@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { PatientMock } from '../../shared/models/mocks/patient-mock';
+
+import { Observable } from 'rxjs';
+
+import { Patient } from 'src/app/shared/models/patient';
+import { PatientsService } from '../services/patients.service';
 
 @Component({
   selector: 'app-list',
@@ -10,15 +14,23 @@ import { PatientMock } from '../../shared/models/mocks/patient-mock';
 export class ListComponent implements OnInit {
 
   displayedColumns: string[] = ['name', 'lastname', 'birthDate', 'targetCalories', 'basalMetabolism', 'estimatedDailyEnergyExpenditure', 'options'];
-  dataSource = PatientMock;
+  loading$: Observable<boolean>;
+  patients$: Observable<Patient[]>;
+  noResults$: Observable<boolean>;
 
   searchForm = new FormGroup({
     search: new FormControl('')
   });
 
-  constructor() { }
+  constructor(private patientsService: PatientsService) { }
 
   ngOnInit(): void {
+    this.loading$ = this.patientsService.loading$;
+    this.noResults$ = this.patientsService.noResults$;
+    this.patients$ = this.patientsService.patients$;
   }
 
+  deleteFood(patient: Patient) {
+    this.patientsService.delete(patient.id).then();
+  }
 }

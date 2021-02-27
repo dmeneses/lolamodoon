@@ -1,20 +1,23 @@
 <div fxLayout="row" fxLayoutAlign="center center">
-  <form fxLayout="column" [formGroup]="createFoodForm">
+  <div fxLayout="row" fxLayoutAlign="center center">
+    <mat-spinner *ngIf="(loading$ | async) === true"></mat-spinner>
+  </div>
+  <form *ngIf="(loading$ | async) === false" fxLayout="column" [formGroup]="createPatientForm">
     <mat-form-field class="form-field" appearance="outline">
       <mat-label> Name </mat-label>
       <input matInput formControlName="name">
-      <mat-error *ngIf="createFoodForm.controls.name.touched || createFoodForm.controls.name.invalid">
-        <span *ngIf="createFoodForm.controls.name.errors.required">El campo es obligatorio.</span>
-        <span *ngIf="createFoodForm.controls.name.errors.pattern">El campo es inválido.</span>
+      <mat-error *ngIf="createPatientForm.controls.name.touched || createPatientForm.controls.name.invalid">
+        <span *ngIf="createPatientForm.controls.name.errors?.required">El campo es obligatorio.</span>
+        <span *ngIf="createPatientForm.controls.name.errors?.pattern">El campo es inválido.</span>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field class="form-field" appearance="outline">
       <mat-label> Apellido </mat-label>
       <input matInput formControlName="lastname">
-      <mat-error *ngIf="createFoodForm.controls.lastname.touched || createFoodForm.controls.lastname.invalid">
-        <span *ngIf="createFoodForm.controls.lastname.errors.required">El campo es obligatorio.</span>
-        <span *ngIf="createFoodForm.controls.lastname.errors.pattern">El campo es inválido.</span>
+      <mat-error *ngIf="createPatientForm.controls.lastname.touched || createPatientForm.controls.lastname.invalid">
+        <span *ngIf="createPatientForm.controls.lastname.errors?.required">El campo es obligatorio.</span>
+        <span *ngIf="createPatientForm.controls.lastname.errors?.pattern">El campo es inválido.</span>
       </mat-error>
     </mat-form-field>
 
@@ -23,42 +26,43 @@
       <input matInput [matDatepicker]="picker" formControlName="birthDate">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
-      <mat-error *ngIf="createFoodForm.controls.birthDate.touched || createFoodForm.controls.birthDate.invalid">
-        <span *ngIf="createFoodForm.controls.birthDate.errors?.required">El campo es obligatorio.</span>
-        <span *ngIf="createFoodForm.controls.birthDate.errors?.pattern">El campo es inválido.</span>
+      <mat-error *ngIf="createPatientForm.controls.birthDate.touched || createPatientForm.controls.birthDate.invalid">
+        <span *ngIf="createPatientForm.controls.birthDate.errors?.required">El campo es obligatorio.</span>
+        <span *ngIf="createPatientForm.controls.birthDate.errors?.pattern">El campo es inválido.</span>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field class="form-field" appearance="outline">
       <mat-label> Calorías Meta </mat-label>
       <input matInput formControlName="targetCalories">
-      <mat-error *ngIf="createFoodForm.controls.targetCalories.touched || createFoodForm.controls.targetCalories.invalid">
-        <span *ngIf="createFoodForm.controls.targetCalories.errors.required">El campo es obligatorio.</span>
-        <span *ngIf="createFoodForm.controls.targetCalories.errors.pattern">El campo es inválido.</span>
+      <mat-error *ngIf="createPatientForm.controls.targetCalories.touched || createPatientForm.controls.targetCalories.invalid">
+        <span *ngIf="createPatientForm.controls.targetCalories.errors?.required">El campo es obligatorio.</span>
+        <span *ngIf="createPatientForm.controls.targetCalories.errors?.pattern">El campo es inválido.</span>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field class="form-field" appearance="outline">
       <mat-label> Metabolismo Basal </mat-label>
       <input matInput formControlName="basalMetabolism">
-      <mat-error *ngIf="createFoodForm.controls.basalMetabolism.touched || createFoodForm.controls.basalMetabolism.invalid">
-        <span *ngIf="createFoodForm.controls.basalMetabolism.errors.required">El campo es obligatorio.</span>
-        <span *ngIf="createFoodForm.controls.basalMetabolism.errors.pattern">El campo es inválido.</span>
+      <mat-error *ngIf="createPatientForm.controls.basalMetabolism.touched || createPatientForm.controls.basalMetabolism.invalid">
+        <span *ngIf="createPatientForm.controls.basalMetabolism.errors?.required">El campo es obligatorio.</span>
+        <span *ngIf="createPatientForm.controls.basalMetabolism.errors?.pattern">El campo es inválido.</span>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field class="form-field" appearance="outline">
       <mat-label> Gasto Caloríco Estimado </mat-label>
       <input matInput formControlName="estimatedDailyEnergyExpenditure">
-      <mat-error *ngIf="createFoodForm.controls.estimatedDailyEnergyExpenditure.touched || createFoodForm.controls.estimatedDailyEnergyExpenditure.invalid">
-        <span *ngIf="createFoodForm.controls.estimatedDailyEnergyExpenditure.errors.required">El campo es obligatorio.</span>
-        <span *ngIf="createFoodForm.controls.estimatedDailyEnergyExpenditure.errors.pattern">El campo es inválido.</span>
+      <mat-error *ngIf="createPatientForm.controls.estimatedDailyEnergyExpenditure.touched || createPatientForm.controls.estimatedDailyEnergyExpenditure.invalid">
+        <span *ngIf="createPatientForm.controls.estimatedDailyEnergyExpenditure.errors?.required">El campo es obligatorio.</span>
+        <span *ngIf="createPatientForm.controls.estimatedDailyEnergyExpenditure.errors?.pattern">El campo es inválido.</span>
       </mat-error>
     </mat-form-field>
 
     <div fxLayout="row" fxLayoutAlign="space-between center">
-      <button mat-raised-button color="basic" type="submit" (click)="submit()">Cancelar</button>
-      <button mat-raised-button color="primary" type="submit" (click)="submit()">Guardar</button>
+      <a mat-raised-button color="basic" [routerLink]="[ '../' ]">Cancelar</a>
+      <button *ngIf="!isEdit" mat-raised-button color="primary" (click)="savePatient()">Guardar</button>
+      <button *ngIf="isEdit" mat-raised-button color="primary" (click)="updatePatient()">Actualizar</button>
     </div>
   </form>
 </div>

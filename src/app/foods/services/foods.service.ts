@@ -12,7 +12,6 @@ export class FoodsService {
     private firestore: FoodFirestoreService,
     private store: FoodsPageStoreService
   ) {
-    console.log('foodsservice')
     this.firestore.collection$().pipe(
       tap(foods => {
         this.store.patch({
@@ -67,7 +66,8 @@ export class FoodsService {
 
   create(food: Food) {
     this.store.patch({ loading: true, foods: [], formStatus: 'Saving...' }, "food create")
-
+    food.createdDate = new Date();
+    food.updatedDate = new Date();
     return this.firestore.create(food).then(_ => {
       this.store.patch({ formStatus: 'Saved!' }, "food create SUCCESS")
       setTimeout(() => this.store.patch({ formStatus: '' }, "food create timeout reset formStatus"), 2000)
@@ -78,7 +78,7 @@ export class FoodsService {
 
   update(food: Food) {
     this.store.patch({ loading: true, foods: [], formStatus: 'Updating...' }, "food update")
-
+    food.updatedDate = new Date();
     return this.firestore.update(food.id, food).then(_ => {
       this.store.patch({ formStatus: 'Saved!' }, "food create SUCCESS")
       setTimeout(() => this.store.patch({ formStatus: '' }, "food update timeout reset formStatus"), 2000)

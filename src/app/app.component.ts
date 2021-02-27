@@ -14,10 +14,8 @@ export class AppComponent {
 
   onLogout() {
     this.authService.logout()
-      .then(() => {
-        console.log('logout success')
-      })
-      .catch((error) => console.log(error))
+      .then(() => {})
+      .catch((error) => console.error(error))
       .finally(() => this.router.navigate(['login']))
   }
 }

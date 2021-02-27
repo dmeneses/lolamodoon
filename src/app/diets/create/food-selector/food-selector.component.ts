@@ -61,7 +61,7 @@ export class FoodSelectorComponent implements OnInit {
       calories: 0
     };
     dietFood.calories = dietFood.protein*2 + dietFood.carbohydrate*4 + dietFood.fat*9;
-    console.log(dietFood);
+
     this.bottomSheetRef.dismiss(dietFood);
   }
 

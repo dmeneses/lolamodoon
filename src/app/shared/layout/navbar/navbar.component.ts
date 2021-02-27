@@ -11,10 +11,9 @@ export class NavbarComponent implements OnInit {
   @Input() displayMenus: boolean = false;
 
   sections = {
-    // TODO: Enable view when database connection is set 
-    // patients: {
-    //   name: 'Pacientes',
-    // },
+    patients: {
+      name: 'Pacientes',
+    },
     foods: {
       name: 'Alimentos',
     },

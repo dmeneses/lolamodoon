@@ -8,7 +8,7 @@ const routes: Routes = [
   { path: 'patients', loadChildren: () => import('./patients/patients.module').then(m => m.PatientsModule), canActivate: [AuthGuard] },
   { path: 'foods', loadChildren: () => import('./foods/foods.module').then(m => m.FoodsModule), canActivate: [AuthGuard] },
   { path: 'diets', loadChildren: () => import('./diets/diets.module').then(m => m.DietsModule), canActivate: [AuthGuard] },
-  { path: '',   redirectTo: '/login', pathMatch: 'full' },
+  { path: '',   redirectTo: '/patients', pathMatch: 'full' },
 ];
 
 @NgModule({
