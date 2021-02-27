@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
-import { FirestoreService } from 'src/app/core/firestore/firestore.service';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { FirestoreService } from 'src/app/shared/models/firestore/firestore.service';
 import { Food } from 'src/app/shared/models/food';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class FoodFirestoreService extends FirestoreService<Food> {
 
   protected basePath: string = 'foods';
 
+  constructor(protected firestore: AngularFirestore) {
+    super(firestore);
+  }
 }

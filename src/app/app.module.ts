@@ -7,7 +7,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LolaLayoutModule } from './shared/layout/lola-layout.module';
-import { environment } from 'src/environments/environment';
 import { CoreModule } from './core/core.module';
 
 @NgModule({

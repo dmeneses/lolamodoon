@@ -1,19 +1,13 @@
-import { Inject, Injectable } from "@angular/core";
 import { AngularFirestore, QueryFn } from "@angular/fire/firestore";
 import { Observable } from "rxjs";
 import { map, tap } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 
-@Injectable()
 export abstract class FirestoreService<T> {
 
   protected abstract basePath: string;
 
-  constructor(
-    @Inject(AngularFirestore) protected firestore: AngularFirestore,
-  ) {
-
-  }
+  constructor(protected firestore: AngularFirestore) {}
 
   doc$(id: string): Observable<T> {
     return this.firestore.doc<T>(`${this.basePath}/${id}`).valueChanges().pipe(

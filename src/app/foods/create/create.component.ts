@@ -56,9 +56,7 @@ export class CreateComponent implements OnInit {
     if (this.createFoodForm.valid) {
       const food = this.createFoodForm.getRawValue();
       this.foodService.create(food)
-        .then(() => console.log('successful save'))
-        .catch((error) => console.error(error))
-        .finally(() => this.router.navigate(['foods']))
+        .then(() => this.router.navigate(['foods']));
     }
   }
 
@@ -66,9 +64,7 @@ export class CreateComponent implements OnInit {
     if (this.createFoodForm.valid) {
       const food = this.createFoodForm.getRawValue();
       this.foodService.update(food)
-        .then(() => console.log('successful update'))
-        .catch((error) => console.error(error))
-        .finally(() => this.router.navigate(['foods']))
+        .then(() => this.router.navigate(['foods']));
     }
   }
 }

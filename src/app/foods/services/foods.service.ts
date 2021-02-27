@@ -5,15 +5,14 @@ import { Food } from 'src/app/shared/models/food';
 import { FoodFirestoreService } from './food.firestore.service';
 import { FoodsPageStoreService } from './foods-page.store.service';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class FoodsService {
 
   constructor(
     private firestore: FoodFirestoreService,
     private store: FoodsPageStoreService
   ) {
+    console.log('foodsservice')
     this.firestore.collection$().pipe(
       tap(foods => {
         this.store.patch({
@@ -33,7 +32,7 @@ export class FoodsService {
     return this.store.state$.pipe(map(state => state.filter));
   }
 
-  get fileredFoods$(): Observable<Food[]> {
+  get filteredFoods$(): Observable<Food[]> {
     return combineLatest([
       this.foods$,
       this.filter$,
@@ -88,10 +87,11 @@ export class FoodsService {
     })
   }
 
-  delete(id: string): any {
+  delete(id: string): Promise<void> {
     this.store.patch({ loading: true, foods: [] }, "food delete")
-    return this.firestore.delete(id).catch(err => {
-      this.store.patch({ loading: false, formStatus: 'An error ocurred' }, "food delete ERROR")
-    })
+    return this.firestore.delete(id)
+      .catch(err => {
+        this.store.patch({ loading: false, formStatus: 'An error ocurred' }, "food delete ERROR")
+      });
   }
 }

@@ -65,6 +65,7 @@
       <button *ngIf="isEdit" mat-raised-button color="primary" type="submit" (click)="updateFood()">Actualizar</button>
     </div>
   </form>
+
   <div fxLayout="column" *ngIf="(loading$ | async) === false">
     <mat-card>
       <mat-card-header>

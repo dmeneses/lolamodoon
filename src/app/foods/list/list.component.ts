@@ -28,4 +28,8 @@ export class ListComponent implements OnInit {
     this.noResults$ = this.foodService.noResults$;
     this.foods$ = this.foodService.foods$;
   }
+
+  deleteFood(food: Food) {
+    this.foodService.delete(food.id).then();
+  }
 }
