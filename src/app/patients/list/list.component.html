@@ -17,29 +17,29 @@
       <td mat-cell *matCellDef="let element"> {{element.name}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="lastname">
-      <th mat-header-cell *matHeaderCellDef> Apellido </th>
-      <td mat-cell *matCellDef="let element"> {{element.lastname}} </td>
+    <ng-container matColumnDef="gender">
+      <th mat-header-cell *matHeaderCellDef> Sexo </th>
+      <td mat-cell *matCellDef="let element"> {{element.gender | gender}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="birthDate">
-      <th mat-header-cell *matHeaderCellDef> Fecha De Nacimiento </th>
-      <td mat-cell *matCellDef="let element"> {{element.birthDate.toDate() | date: 'dd / MM / yyyy'}} </td>
+    <ng-container matColumnDef="dietGoal">
+      <th mat-header-cell *matHeaderCellDef> Objetivo </th>
+      <td mat-cell *matCellDef="let element"> {{element.dietGoal | dietGoal }} </td>
     </ng-container>
 
     <ng-container matColumnDef="targetCalories">
-      <th mat-header-cell *matHeaderCellDef> Calorías Meta </th>
+      <th mat-header-cell *matHeaderCellDef> Calorías Objetivo </th>
       <td mat-cell *matCellDef="let element"> {{element.targetCalories}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="basalMetabolism">
-      <th mat-header-cell *matHeaderCellDef> Metabolismo Basal </th>
-      <td mat-cell *matCellDef="let element"> {{element.basalMetabolism}} </td>
+    <ng-container matColumnDef="refeedTargetCalories">
+      <th mat-header-cell *matHeaderCellDef>  Calorias Objetivo en Refeed </th>
+      <td mat-cell *matCellDef="let element"> {{element.refeedTargetCalories}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="estimatedDailyEnergyExpenditure">
-      <th mat-header-cell *matHeaderCellDef> Gasto Caloríco Estimado </th>
-      <td mat-cell *matCellDef="let element"> {{element.estimatedDailyEnergyExpenditure}} </td>
+    <ng-container matColumnDef="dietDeficit">
+      <th mat-header-cell *matHeaderCellDef> Deficit Semanal Generado </th>
+      <td mat-cell *matCellDef="let element"> {{element.dietDeficit}} </td>
     </ng-container>
 
     <ng-container matColumnDef="options">

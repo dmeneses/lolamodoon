@@ -1,9 +1,12 @@
 export interface Patient {
   id?: string;
   name: string;
-  lastname: string;
-  birthDate: Date;
-  targetCalories: number;
-  basalMetabolism: number;
-  estimatedDailyEnergyExpenditure: number;
+  gender: string;
+  weight: number;
+  activityLevel: number;
+  activityLevelMeasure: number;
+  corporalFatPercentage: number;
+  dietGoal: string;
+  dietGoalPace: number;
+  refeedsPerWeek: number;
 }

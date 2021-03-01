@@ -1,10 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { GenderPipe } from './gender.pipe';
+
+
 
 @NgModule({
-  declarations: [],
+  declarations: [GenderPipe],
   imports: [
     CommonModule
-  ]
+  ],
+  exports: [GenderPipe]
 })
-export class SharedModule { }
+export class GenderModule { }

@@ -30,8 +30,8 @@ export class PatientSelectorComponent implements OnInit {
 
   showPatient(patientId: string) {
     if (patientId) {
-      const {name, lastname} = this.patients.find(patient => patientId === patient.patientId);
-      return `${name} ${lastname}`;
+      const {name} = this.patients.find(patient => patientId === patient.id);
+      return `${name}`;
     }
 
     return '';
@@ -39,12 +39,12 @@ export class PatientSelectorComponent implements OnInit {
 
   addPatient() {
     const { patientId } = this.form.getRawValue();
-    const patient = this.patients.find(patient => patientId === patient.patientId)
+    const patient = this.patients.find(patient => patientId === patient.id)
     this.bottomSheetRef.dismiss(patient);
   }
 
   private filter(value: string): Patient[] {
     const filterValue = value.toLowerCase();
-    return this.patients.filter(patient => patient.name.toLowerCase().includes(filterValue) || patient.lastname.toLowerCase().includes(filterValue));
+    return this.patients.filter(patient => patient.name.toLowerCase().includes(filterValue));
   }
 }

@@ -1,65 +1,111 @@
-<div fxLayout="row" fxLayoutAlign="center center">
-  <div fxLayout="row" fxLayoutAlign="center center">
+<ng-template #formInput let-input="input" let-group="group">
+  <mat-form-field class="form-field" appearance="outline" [formGroup]="group">
+    <mat-label> {{input.label}} </mat-label>
+    <input matInput [formControlName]="input.name">
+    <span *ngIf="input.suffix" matSuffix>{{ input.suffix }}</span>
+    <mat-error *ngIf="group.get(input.name).touched || group.get(input.name).invalid">
+      <span *ngIf="group.get(input.name).errors?.required">El campo es obligatorio.</span>
+      <span *ngIf="group.get(input.name).errors?.pattern">El campo es inválido.</span>
+    </mat-error>
+  </mat-form-field>
+</ng-template>
+
+<ng-template #formSelect let-input="input" let-group="group">
+  <div [formGroup]="group">
+    <mat-form-field class="form-field" appearance="outline">
+      <mat-label> {{input.label}} </mat-label>
+      <mat-select [formControlName]="input.name">
+        <mat-option *ngFor="let option of input.options" [value]="option.value">
+          {{ option.label }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="group.get(input.name).touched || group.get(input.name).invalid">
+        <span *ngIf="group.get(input.name).errors?.required">El campo es obligatorio.</span>
+        <span *ngIf="group.get(input.name).errors?.pattern">El campo es inválido.</span>
+      </mat-error>
+    </mat-form-field>  
+  </div>
+</ng-template>
+
+<div fxLayout="column" fxLayoutAlign="start center">
+  <div fxLayout="row">
     <mat-spinner *ngIf="(loading$ | async) === true"></mat-spinner>
   </div>
-  <form *ngIf="(loading$ | async) === false" fxLayout="column" [formGroup]="createPatientForm">
-    <mat-form-field class="form-field" appearance="outline">
-      <mat-label> Name </mat-label>
-      <input matInput formControlName="name">
-      <mat-error *ngIf="createPatientForm.controls.name.touched || createPatientForm.controls.name.invalid">
-        <span *ngIf="createPatientForm.controls.name.errors?.required">El campo es obligatorio.</span>
-        <span *ngIf="createPatientForm.controls.name.errors?.pattern">El campo es inválido.</span>
-      </mat-error>
-    </mat-form-field>
+  <form *ngIf="(loading$ | async) === false" 
+    fxLayout="column" fxLayoutGap="10px"
+    [formGroup]="createPatientForm2">
+    
+    <div fxLayout="row" fxLayoutGap="10px">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            Datos Iniciales
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content fxLayout="column">
+          <ng-container *ngTemplateOutlet="formInput; context: {input: {name: 'name', label: 'Nombre'}, group: createPatientForm2}"></ng-container>
+          <ng-container *ngTemplateOutlet="formInput; context: {input: {name: 'weight', label: 'Peso', suffix: 'Kgs'}, group: createPatientForm2}"></ng-container>
+          <ng-container *ngTemplateOutlet="formSelect; context: {input: {name: 'activityLevel', label: 'Nivel de Actividad', options: activityLevelOptions}, group: createPatientForm2}"></ng-container>
+          <div *ngIf="createPatientForm2.get('activityLevel').value === 0">
+            <ng-container *ngTemplateOutlet="formSelect; context: {input: {name: 'activityLevelMeasure', label: 'Valor en Nivel de Actividad', options: activityLevelMeasure[0]}, group: createPatientForm2}"></ng-container>
+          </div>
+          <div *ngIf="createPatientForm2.get('activityLevel').value === 1">
+            <ng-container *ngTemplateOutlet="formSelect; context: {input: {name: 'activityLevelMeasure', label: 'Valor en Nivel de Actividad', options: activityLevelMeasure[1]}, group: createPatientForm2}"></ng-container>
+          </div>
+          <div *ngIf="createPatientForm2.get('activityLevel').value === 2">
+            <ng-container *ngTemplateOutlet="formSelect; context: {input: {name: 'activityLevelMeasure', label: 'Valor en Nivel de Actividad', options: activityLevelMeasure[2]}, group: createPatientForm2}"></ng-container>
+          </div>
+          <div *ngIf="createPatientForm2.get('activityLevel').value === 3">
+            <ng-container *ngTemplateOutlet="formSelect; context: {input: {name: 'activityLevelMeasure', label: 'Valor en Nivel de Actividad', options: activityLevelMeasure[3]}, group: createPatientForm2}"></ng-container>
+          </div>
+  
+          <mat-form-field class="form-field" appearance="outline">
+            <mat-label> KCal de Mantenimiento </mat-label>
+            <input matInput [value]="maintenanceCalories" disabled>
+            <span matSuffix>Kcals</span>
+          </mat-form-field>
+        </mat-card-content>
+      </mat-card>
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            Balance Energético
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content fxLayout="column">
+          <ng-container *ngTemplateOutlet="formSelect; context: {input: {name: 'gender', label: 'Sexo', options: genderOptions}, group: createPatientForm2}"></ng-container>
+          <ng-container *ngTemplateOutlet="formSelect; context: {input: {name: 'corporalFatPercentage', label: '% Grasas Corporal', options: corporalFatPercentageOptions}, group: createPatientForm2}"></ng-container>
+          <ng-container *ngTemplateOutlet="formSelect; context: {input: {name: 'dietGoal', label: 'Objetivo', options: dietGoalOptions}, group: createPatientForm2}"></ng-container>
+          <div *ngIf="createPatientForm2.get('dietGoal').value === 'muscle-gain'">
+            <ng-container *ngTemplateOutlet="formSelect; context: {input: {name: 'dietGoalPace', label: 'Ritmo', options: muscleGainDietGoalPaceOptions}, group: createPatientForm2}"></ng-container>
+          </div>
+          <div *ngIf="createPatientForm2.get('dietGoal').value === 'fat-loss'">
+            <ng-container *ngTemplateOutlet="formSelect; context: {input: {name: 'dietGoalPace', label: 'Ritmo', options: fatLossDietGoalPaceOptions}, group: createPatientForm2}"></ng-container>
+          </div>
+          <div *ngIf="createPatientForm2.get('dietGoal').value === 'fat-loss'">
+            <ng-container *ngTemplateOutlet="formInput; context: {input: {name: 'refeedsPerWeek', label: 'Refeeds Por Semana'}, group: createPatientForm2}"></ng-container>
+          </div>
+          <mat-form-field class="form-field" appearance="outline">
+            <mat-label *ngIf="createPatientForm2.get('dietGoal').value === 'fat-loss'">Calorías Objetivo en Déficit</mat-label>
+            <mat-label *ngIf="createPatientForm2.get('dietGoal').value === 'muscle-gain'">Calorías Objetivo</mat-label>
+            <input matInput [value]="targetCalories" disabled>
+            <span matSuffix>Kcals</span>
+          </mat-form-field>
+          <mat-form-field *ngIf="createPatientForm2.get('dietGoal').value === 'fat-loss'" class="form-field" appearance="outline">
+            <mat-label>Calorías Objetivo en Dias de Refeed</mat-label>
+            <input matInput [value]="refeedTargetCalories" disabled>
+            <span matSuffix>Kcals</span>
+          </mat-form-field>
+          <mat-form-field *ngIf="createPatientForm2.get('dietGoal').value === 'fat-loss'" class="form-field" appearance="outline">
+            <mat-label>Déficit Semanal Generado por la Dieta</mat-label>
+            <input matInput [value]="dietDeficit" disabled>
+            <span matSuffix>Kcals</span>
+          </mat-form-field>
+        </mat-card-content>
+      </mat-card>
+    </div>
 
-    <mat-form-field class="form-field" appearance="outline">
-      <mat-label> Apellido </mat-label>
-      <input matInput formControlName="lastname">
-      <mat-error *ngIf="createPatientForm.controls.lastname.touched || createPatientForm.controls.lastname.invalid">
-        <span *ngIf="createPatientForm.controls.lastname.errors?.required">El campo es obligatorio.</span>
-        <span *ngIf="createPatientForm.controls.lastname.errors?.pattern">El campo es inválido.</span>
-      </mat-error>
-    </mat-form-field>
-
-    <mat-form-field class="form-field" appearance="outline">
-      <mat-label> Fecha de Nacimiento </mat-label>
-      <input matInput [matDatepicker]="picker" formControlName="birthDate">
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-      <mat-error *ngIf="createPatientForm.controls.birthDate.touched || createPatientForm.controls.birthDate.invalid">
-        <span *ngIf="createPatientForm.controls.birthDate.errors?.required">El campo es obligatorio.</span>
-        <span *ngIf="createPatientForm.controls.birthDate.errors?.pattern">El campo es inválido.</span>
-      </mat-error>
-    </mat-form-field>
-
-    <mat-form-field class="form-field" appearance="outline">
-      <mat-label> Calorías Meta </mat-label>
-      <input matInput formControlName="targetCalories">
-      <mat-error *ngIf="createPatientForm.controls.targetCalories.touched || createPatientForm.controls.targetCalories.invalid">
-        <span *ngIf="createPatientForm.controls.targetCalories.errors?.required">El campo es obligatorio.</span>
-        <span *ngIf="createPatientForm.controls.targetCalories.errors?.pattern">El campo es inválido.</span>
-      </mat-error>
-    </mat-form-field>
-
-    <mat-form-field class="form-field" appearance="outline">
-      <mat-label> Metabolismo Basal </mat-label>
-      <input matInput formControlName="basalMetabolism">
-      <mat-error *ngIf="createPatientForm.controls.basalMetabolism.touched || createPatientForm.controls.basalMetabolism.invalid">
-        <span *ngIf="createPatientForm.controls.basalMetabolism.errors?.required">El campo es obligatorio.</span>
-        <span *ngIf="createPatientForm.controls.basalMetabolism.errors?.pattern">El campo es inválido.</span>
-      </mat-error>
-    </mat-form-field>
-
-    <mat-form-field class="form-field" appearance="outline">
-      <mat-label> Gasto Caloríco Estimado </mat-label>
-      <input matInput formControlName="estimatedDailyEnergyExpenditure">
-      <mat-error *ngIf="createPatientForm.controls.estimatedDailyEnergyExpenditure.touched || createPatientForm.controls.estimatedDailyEnergyExpenditure.invalid">
-        <span *ngIf="createPatientForm.controls.estimatedDailyEnergyExpenditure.errors?.required">El campo es obligatorio.</span>
-        <span *ngIf="createPatientForm.controls.estimatedDailyEnergyExpenditure.errors?.pattern">El campo es inválido.</span>
-      </mat-error>
-    </mat-form-field>
-
-    <div fxLayout="row" fxLayoutAlign="space-between center">
+    <div *ngIf="(loading$ | async) === false" fxLayout="row" fxLayoutAlign="end start" fxLayoutGap="10px">
       <a mat-raised-button color="basic" [routerLink]="[ '../' ]">Cancelar</a>
       <button *ngIf="!isEdit" mat-raised-button color="primary" (click)="savePatient()">Guardar</button>
       <button *ngIf="isEdit" mat-raised-button color="primary" (click)="updatePatient()">Actualizar</button>

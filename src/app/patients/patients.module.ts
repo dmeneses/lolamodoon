@@ -18,6 +18,11 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { PatientsService } from './services/patients.service';
 import { PatientsPageStoreService } from './services/patients-page.store.service';
 import { PatientsFirestoreService } from './services/patients.firestore.service';
+import { MatSelectModule } from '@angular/material/select';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatCardModule } from '@angular/material/card';
+import { GenderModule } from '../shared/gender/gender.module';
+import { DietGoalModule } from '../shared/diet-goal/diet-goal.module';
 
 const routes = [
   {
@@ -58,8 +63,13 @@ const routes = [
     MatIconModule,
     MatNativeDateModule,
     MatDatepickerModule,
+    MatSelectModule,
+    MatCardModule,
+    MatProgressSpinnerModule,
     FlexLayoutModule,
     LolaLayoutModule,
+    GenderModule,
+    DietGoalModule,
   ],
   providers: [
     PatientsService,
