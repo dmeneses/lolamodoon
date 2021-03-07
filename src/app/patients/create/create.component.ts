@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ChartOptions, ChartType } from 'chart.js';
+import * as pluginDataLabels from 'chartjs-plugin-datalabels';
+
+import { Label, SingleDataSet } from 'ng2-charts';
 import { PatientsService } from 'src/app/patients/services/patients.service';
 import { Patient } from 'src/app/shared/models/patient';
 
@@ -27,6 +31,8 @@ export class CreateComponent implements OnInit {
     dietGoal: new FormControl('muscle-gain', [Validators.required]),
     dietGoalPace: new FormControl(1.5, [Validators.required]),
     refeedsPerWeek: new FormControl(1, [Validators.required]),
+    proteinAmount: new FormControl(2.2, [Validators.required]),
+    fatPercentage: new FormControl(15, [Validators.required]),
   });
 
   isEdit = false;
@@ -35,6 +41,43 @@ export class CreateComponent implements OnInit {
   targetCalories = 0;
   refeedTargetCalories = 0;
   dietDeficit = 0;
+
+  macrosCarbs = 0;
+  macrosProtein = 0;
+  macrosFat = 0;
+  macrosFiber = 0;
+  macrosSum = 0;
+  macrosFatLow = 0;
+  macrosFatTop = 0;
+  macrosCarbsLow = 0;
+  macrosCarbsTop = 0;
+  macrosProteinLow = 0;
+  macrosProteinTop = 0;
+  macrosFiberLow = 0;
+  macrosFiberTop = 0;
+  doughnutChartLabels: Label[] = [
+    "P",
+    "G",
+    "CH"
+  ];
+  doughnutChartData: SingleDataSet = [0, 0, 0];
+  doughnutChartType: ChartType = "doughnut";
+  doughnutChartOptions: ChartOptions = {
+    responsive: true,
+    legend: {
+      position: 'bottom',
+    },
+    plugins: {
+      datalabels: {
+        formatter: (value, _) => {
+          if (!value) return '0%';
+
+          return `${Math.round(((value / this.macrosSum)+ Number.EPSILON) * 1000) / 10}%`;
+        },
+      },
+    }
+  };
+  doughnutChartPlugins = [pluginDataLabels];
 
   genderOptions = [
     {
@@ -192,19 +235,45 @@ export class CreateComponent implements OnInit {
 
     this.createPatientForm2.valueChanges.subscribe((value) => {
       const modifiedWeight = +value.weight * 2.20462;
-      this.maintenanceCalories = Math.round(modifiedWeight * 10 * +value.activityLevelMeasure);
+
+      //Maintenance cal
+      this.maintenanceCalories = modifiedWeight * 10 * +value.activityLevelMeasure;
+
+      // Target calories
       if (value.dietGoal === 'muscle-gain') {
-        this.targetCalories = Math.round(this.maintenanceCalories 
-          + ((modifiedWeight * +value.dietGoalPace * 3500) / 4 / 7));
+        this.targetCalories = this.maintenanceCalories 
+          + ((modifiedWeight * +value.dietGoalPace * 3500) / 4 / 7);
       } else {
         this.refeedTargetCalories = this.maintenanceCalories;
-        this.targetCalories = Math.round(this.maintenanceCalories 
-          - (3500 * modifiedWeight * +value.dietGoalPace) / (7 - +value.refeedsPerWeek));
-        this.dietDeficit = Math.round(3500 * modifiedWeight * +value.dietGoalPace);
+        this.targetCalories = this.maintenanceCalories 
+          - (3500 * modifiedWeight * +value.dietGoalPace) / (7 - +value.refeedsPerWeek);
+        this.dietDeficit = 3500 * modifiedWeight * +value.dietGoalPace;
       }
 
-      this.basalMetabolicRate = Math.round((10 * +value.weight) + (6.25 * +value.height) - 5 * (+value.age) 
-        + (value.gender === 'male' ? +5 : -161));
+      //BMR
+      this.basalMetabolicRate = (10 * +value.weight) + (6.25 * +value.height) - 5 * (+value.age) 
+        + (value.gender === 'male' ? +5 : -161);
+
+      // Macros
+      const modifiedProtein = +value.proteinAmount / 2.20462;
+      this.macrosFat = this.roundTo((this.targetCalories * (+value.fatPercentage / 100))  / 9);
+      this.macrosProtein = this.roundTo(modifiedWeight * modifiedProtein);
+      this.macrosCarbs = this.roundTo((this.targetCalories - (4 * this.macrosProtein) - (9 * this.macrosFat)) / 4);
+      this.macrosCarbsLow = this.macrosCarbs - 10;
+      this.macrosCarbsTop = this.macrosCarbs + 10;
+      this.macrosProteinLow = this.macrosProtein - 10;
+      this.macrosProteinTop = this.macrosProtein + 10;
+      this.macrosFatLow = this.macrosFat - 10;
+      this.macrosFatTop = this.macrosFat + 10;
+
+      this.macrosSum = this.macrosFat * 9 + this.macrosCarbs * 4 + this.macrosProtein * 4;
+      this.macrosFiberLow = this.roundTo((this.macrosSum / 1000) * 10);
+      this.macrosFiberTop = this.roundTo(this.macrosCarbs * 0.2);
+      this.doughnutChartData = [
+        this.macrosProtein * 4,
+        this.macrosFat * 9,
+        this.macrosCarbs * 4,
+      ];
     });
 
     const { id } = this.activatedRoute.snapshot.params;
@@ -242,5 +311,9 @@ export class CreateComponent implements OnInit {
   getError(inputName: string, errorKey: string) {
     return this.createPatientForm2.get(inputName).errors &&
       this.createPatientForm2.get(inputName).errors[errorKey];
+  }
+
+  roundTo(number, roundto = 5) {
+    return roundto * Math.round(number / roundto);
   }
 }

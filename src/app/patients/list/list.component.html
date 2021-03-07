@@ -22,6 +22,11 @@
       <td mat-cell *matCellDef="let element"> {{element.gender | gender}} </td>
     </ng-container>
 
+    <ng-container matColumnDef="pathology">
+      <th mat-header-cell *matHeaderCellDef> Patología </th>
+      <td mat-cell *matCellDef="let element"> {{element.pathology}} </td>
+    </ng-container>
+
     <ng-container matColumnDef="dietGoal">
       <th mat-header-cell *matHeaderCellDef> Objetivo </th>
       <td mat-cell *matCellDef="let element"> {{element.dietGoal | dietGoal }} </td>
@@ -29,17 +34,17 @@
 
     <ng-container matColumnDef="targetCalories">
       <th mat-header-cell *matHeaderCellDef> Calorías Objetivo </th>
-      <td mat-cell *matCellDef="let element"> {{element.targetCalories}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.targetCalories | number:'1.0-0'}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="refeedTargetCalories">
-      <th mat-header-cell *matHeaderCellDef>  Calorias Objetivo en Refeed </th>
-      <td mat-cell *matCellDef="let element"> {{element.refeedTargetCalories}} </td>
+    <ng-container matColumnDef="basalMetabolicRate">
+      <th mat-header-cell *matHeaderCellDef>  Metabolismo Basal </th>
+      <td mat-cell *matCellDef="let element"> {{element.basalMetabolicRate | number:'1.0-0'}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="dietDeficit">
-      <th mat-header-cell *matHeaderCellDef> Deficit Semanal Generado </th>
-      <td mat-cell *matCellDef="let element"> {{element.dietDeficit}} </td>
+    <ng-container matColumnDef="maintenanceCalories">
+      <th mat-header-cell *matHeaderCellDef> Gasto de Energia Diario Estimado </th>
+      <td mat-cell *matCellDef="let element"> {{element.maintenanceCalories | number:'1.0-0'}} </td>
     </ng-container>
 
     <ng-container matColumnDef="options">

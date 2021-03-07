@@ -14,7 +14,7 @@ import { PatientsService } from '../services/patients.service';
 })
 export class ListComponent implements OnInit {
 
-  displayedColumns: string[] = ['name', 'gender', 'dietGoal', 'targetCalories', 'refeedTargetCalories', 'dietDeficit', 'options'];
+  displayedColumns: string[] = ['name', 'gender', 'pathology', 'dietGoal', 'basalMetabolicRate', 'maintenanceCalories', 'targetCalories',   'options'];
   loading$: Observable<boolean>;
   patients$: Observable<any>;
   noResults$: Observable<boolean>;
@@ -31,20 +31,20 @@ export class ListComponent implements OnInit {
     this.patients$ = this.patientsService.patients$
       .pipe(
         map((patients) => patients
-          .map(({id, name, gender, dietGoal, weight, dietGoalPace, activityLevelMeasure, refeedsPerWeek}) => {
+          .map(({id, name, pathology, gender, weight, height, age, dietGoal, dietGoalPace, activityLevelMeasure, refeedsPerWeek}) => {
             const modifiedWeight = +weight * 2.20462;
             const maintenanceCalories = Math.round(modifiedWeight * 10 * +activityLevelMeasure);
       
             return {
               id,
-              name, gender,
+              name, gender, pathology,
               dietGoal,
               targetCalories: dietGoal === 'muscle-gain' ? 
-                Math.round(maintenanceCalories + ((modifiedWeight * +dietGoalPace * 3500) / 4 / 7)) :
-                Math.round(maintenanceCalories - (3500 * modifiedWeight * +dietGoalPace) / (7 - +refeedsPerWeek)),
-              refeedTargetCalories: dietGoal === 'muscle-gain' ? '-' : maintenanceCalories,
-              dietDeficit: dietGoal === 'muscle-gain' ? '-' :
-                Math.round(3500 * modifiedWeight * +dietGoalPace)
+                maintenanceCalories + ((modifiedWeight * +dietGoalPace * 3500) / 4 / 7) :
+                maintenanceCalories - (3500 * modifiedWeight * +dietGoalPace) / (7 - +refeedsPerWeek),
+              maintenanceCalories,
+              basalMetabolicRate: (10 * +weight) + (6.25 * +height) - 5 * (+age) 
+                + (gender === 'male' ? +5 : -161),
             };
           }))
       );

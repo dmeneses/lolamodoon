@@ -82,9 +82,53 @@
           <div *ngIf="createPatientForm2.get('dietGoal').value === 'fat-loss'">
             <ng-container *ngTemplateOutlet="formSelect; context: {input: {name: 'dietGoalPace', label: 'Ritmo', options: fatLossDietGoalPaceOptions}, group: createPatientForm2}"></ng-container>
           </div>
-          <div *ngIf="createPatientForm2.get('dietGoal').value === 'fat-loss'">
+          <!-- <div *ngIf="createPatientForm2.get('dietGoal').value === 'fat-loss'">
             <ng-container *ngTemplateOutlet="formInput; context: {input: {name: 'refeedsPerWeek', label: 'Refeeds Por Semana'}, group: createPatientForm2}"></ng-container>
-          </div>
+          </div> -->
+        </mat-card-content>
+      </mat-card>
+
+
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            Macros
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content fxLayout="column">
+          <ng-container *ngTemplateOutlet="formInput; context: {input: {name: 'proteinAmount', label: 'Proteína', suffix: 'g/kg'}, group: createPatientForm2}"></ng-container>
+          <ng-container *ngTemplateOutlet="formInput; context: {input: {name: 'fatPercentage', label: 'Grasas', suffix: '%'}, group: createPatientForm2}"></ng-container>
+          <h3><b>Macronutrientes en base a objetivos</b></h3>
+          <table>
+            <tbody>
+              <tr>
+                <td>Grasas</td>
+                <td>{{macrosFatLow}} - {{macrosFatTop}}g</td>
+              </tr>
+              <tr>
+                <td>Carbohidratos</td>
+                <td>{{macrosCarbsLow}} - {{macrosCarbsTop}}g</td>
+              </tr>
+              <tr>
+                <td>Proteína</td>
+                <td>{{macrosProteinLow}} - {{macrosProteinTop}}g</td>
+              </tr>
+              <tr>
+                <td>Fibra</td>
+                <td>{{macrosFiberLow}} - {{macrosFiberTop}}g</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div style="display: block; margin-top: 20px;">
+            <canvas baseChart 
+              [data]="doughnutChartData"
+              [labels]="doughnutChartLabels"
+              [chartType]="doughnutChartType"
+              [options]="doughnutChartOptions"
+              [plugins]="doughnutChartPlugins">
+            </canvas>
+          </div>          
         </mat-card-content>
       </mat-card>
 
@@ -95,34 +139,34 @@
           </mat-card-title>
         </mat-card-header>
         <mat-card-content fxLayout="column">
-          <h2>Calorías de Mantenimiento</h2>
-          <p>{{maintenanceCalories}}<span> Kcals</span></p>
+          <h3><b>Calorías de Mantenimiento</b></h3>
+          <p>{{maintenanceCalories | number:'1.0-0'}}<span> Kcals</span></p>
   
-          <h2>Metabolismo Basal</h2>
-          <p>{{basalMetabolicRate}}<span> Calorías/Día</span></p>
+          <h3><b>Metabolismo Basal</b></h3>
+          <p>{{basalMetabolicRate | number:'1.0-0'}}<span> Calorías/Día</span></p>
 
-          <h2>
-            <span *ngIf="createPatientForm2.get('dietGoal').value === 'fat-loss'">
+          <h3>
+            <b><span *ngIf="createPatientForm2.get('dietGoal').value === 'fat-loss'">
               Calorías Objetivo en Déficit
             </span>
             <span *ngIf="createPatientForm2.get('dietGoal').value === 'muscle-gain'">
               Calorías Objetivo
-            </span>
-          </h2>
-          <p>{{targetCalories}}<span> Kcals</span></p>
+            </span></b>
+          </h3>
+          <p>{{targetCalories | number:'1.0-0'}}<span> Kcals</span></p>
 
-          <div *ngIf="createPatientForm2.get('dietGoal').value === 'fat-loss'">
+          <!-- <div *ngIf="createPatientForm2.get('dietGoal').value === 'fat-loss'">
             <h2>
                 Calorías Objetivo en Dias de Refeed
             </h2>
-            <p>{{refeedTargetCalories}}<span> Kcals</span></p>
-          </div>
+            <p>{{refeedTargetCalories | number:'1.0-0'}}<span> Kcals</span></p>
+          </div> -->
 
           <div *ngIf="createPatientForm2.get('dietGoal').value === 'fat-loss'">
-            <h2>
-              Déficit Semanal Generado por la Dieta
-            </h2>
-            <p>{{dietDeficit}}<span> Kcals</span></p>
+            <h3>
+              <b>Déficit Semanal Generado por la Dieta</b>
+            </h3>
+            <p>{{dietDeficit | number:'1.0-0'}}<span> Kcals</span></p>
           </div>
         </mat-card-content>
       </mat-card>

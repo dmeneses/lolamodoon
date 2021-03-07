@@ -23,6 +23,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
 import { GenderModule } from '../shared/gender/gender.module';
 import { DietGoalModule } from '../shared/diet-goal/diet-goal.module';
+import { MatDividerModule } from '@angular/material/divider';
+import { ChartsModule } from 'ng2-charts';
 
 const routes = [
   {
@@ -65,8 +67,10 @@ const routes = [
     MatDatepickerModule,
     MatSelectModule,
     MatCardModule,
+    MatDividerModule,
     MatProgressSpinnerModule,
     FlexLayoutModule,
+    ChartsModule,
     LolaLayoutModule,
     GenderModule,
     DietGoalModule,
