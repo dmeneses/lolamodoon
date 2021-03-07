@@ -1,10 +1,12 @@
 import { Food } from "./food";
 
 export interface Diet {
-  dietId?: string;
+  id?: string;
   name: string;
   patientsIds: string[];
   dietSections: DietSection[];
+  createdDate: Date;
+  updatedDate: Date;
 }
 
 export interface DietSection {

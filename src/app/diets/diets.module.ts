@@ -22,6 +22,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { PatientSelectorComponent } from './create/patient-selector/patient-selector.component';
 import { FoodSelectorComponent } from './create/food-selector/food-selector.component';
 import { FoodSectionSelectorComponent } from './create/food-section-selector/food-section-selector.component';
+import { DietsService } from './services/diets.service';
+import { DietFirestoreService } from './services/diet.firestore.service';
+import { DietsPageStoreService } from './services/diets-page.store.service';
 
 
 const routes = [
@@ -66,6 +69,11 @@ const routes = [
     MatSelectModule,
     FlexLayoutModule,
     LolaLayoutModule,
+  ],
+  providers: [
+    DietsService,
+    DietFirestoreService,
+    DietsPageStoreService,
   ]
 })
 export class DietsModule { }

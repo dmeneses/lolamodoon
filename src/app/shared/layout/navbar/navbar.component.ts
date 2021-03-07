@@ -17,10 +17,9 @@ export class NavbarComponent implements OnInit {
     foods: {
       name: 'Alimentos',
     },
-    // TODO: Enable view when database connection is set 
-    // diets: {
-    //   name: 'Dietas',
-    // }
+    diets: {
+      name: 'Dietas',
+    }
   };
 
   sectionKeys = Object.keys(this.sections);
