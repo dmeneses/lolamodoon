@@ -8,9 +8,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
-import { AuthGuard } from './auth/auth.guard';
-import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from 'src/environments/environment';
 
@@ -30,12 +29,13 @@ import { environment } from 'src/environments/environment';
   ],
   providers: [
     AuthService,
-    AuthGuard,
   ],
-  exports: [ 
+  exports: [
+    CommonModule,
     AngularFireModule,
     AngularFirestoreModule,
     LoginComponent,
+    ReactiveFormsModule
   ]
 })
 export class CoreModule { }
