@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { LolaLayoutModule } from './shared/layout/lola-layout.module';
 import { CoreModule } from './core/core.module';
 import { PatientsCoreModule } from './shared/patients-core/patients-core.module';
+import { FoodsCoreModule } from './shared/foods-core/foods-core.module';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { PatientsCoreModule } from './shared/patients-core/patients-core.module'
     CoreModule,
     LolaLayoutModule,
     PatientsCoreModule,
+    FoodsCoreModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

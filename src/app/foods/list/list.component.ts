@@ -3,7 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Food } from 'src/app/shared/models/food';
 import { FoodMock } from '../../shared/models/mocks/food-mock';
-import { FoodsService } from '../services/foods.service';
+import { FoodsService } from '../../shared/foods-core/services/foods.service';
 
 @Component({
   selector: 'app-list',

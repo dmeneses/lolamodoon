@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { filter, find, map, switchMap } from 'rxjs/operators';
 import { CaloriesCalculatorPipe } from 'src/app/shared/calories-calculator/calories-calculator.pipe';
 import { Food } from 'src/app/shared/models/food';
-import { FoodsService } from '../services/foods.service';
+import { FoodsService } from '../../shared/foods-core/services/foods.service';
 
 @Component({
   selector: 'app-create',

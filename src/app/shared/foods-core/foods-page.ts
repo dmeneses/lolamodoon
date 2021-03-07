@@ -1,4 +1,4 @@
-import { Food } from "../shared/models/food";
+import { Food } from "../models/food";
 
 export interface FoodsPage {
 

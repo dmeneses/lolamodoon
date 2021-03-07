@@ -1,13 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
-import { Observable } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
+import { combineLatest, Observable, Subject } from 'rxjs';
+import { map, takeUntil } from 'rxjs/operators';
+import { FoodsService } from 'src/app/shared/foods-core/services/foods.service';
 import { Food } from 'src/app/shared/models/food';
 import { FoodMock } from 'src/app/shared/models/mocks/food-mock';
-import { PatientMock } from 'src/app/shared/models/mocks/patient-mock';
-import { Patient } from 'src/app/shared/models/patient';
-import { PatientSelectorComponent } from '../patient-selector/patient-selector.component';
 
 @Component({
   selector: 'app-food-selector',
@@ -17,36 +15,51 @@ import { PatientSelectorComponent } from '../patient-selector/patient-selector.c
 export class FoodSelectorComponent implements OnInit {
   foodTypes = ['protein', 'fat', 'carbohydrate'];
   foods: Food[] = FoodMock;
-  filteredFoods: Observable<Food[]>;
+  filteredFoods: Food[];
   form = new FormGroup({
-    foodId: new FormControl(''),
+    food: new FormControl(''),
     servingSize: new FormControl(0),
     servingSizeUnit: new FormControl('grams'),
     foodType: new FormControl('Proteína'),
   });
-
-  constructor(private bottomSheetRef: MatBottomSheetRef<PatientSelectorComponent>) { }
+  availableFoods$: Observable<Food[]>;
+  unsubscribe$ = new Subject();
+  constructor(private bottomSheetRef: MatBottomSheetRef<FoodSelectorComponent>,
+    private foodsService: FoodsService,
+    private ref: ChangeDetectorRef) { }
 
   ngOnInit(): void {
-    this.filteredFoods = this.form.controls.foodId.valueChanges
-      .pipe(
-        startWith(''),
-        map(value => this.filter(value))
-      );
+    this.availableFoods$ = this.foodsService.foods$;
+    
+    combineLatest([
+      this.form.controls.food.valueChanges,
+      this.availableFoods$
+    ]).pipe(
+      takeUntil(this.unsubscribe$),
+      map(([foodName, foods]) => typeof foodName === 'string' ?
+        foods.filter(food => food.name.toLowerCase().includes(foodName.toLowerCase())) : []
+      )
+    ).subscribe((results) => {
+      this.filteredFoods = results;
+      this.ref.detectChanges();
+    });
   }
 
-  showFood(foodId: string) {
-    if (foodId) {
-      const { name } = this.foods.find(food => foodId === food.id);
-      return `${name}`;
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
+  showFood(food: Food) {
+    if (food) {
+      return `${food.name}`;
     }
 
     return '';
   }
 
   addFood() {
-    const { foodId, servingSize, servingSizeUnit, foodType } = this.form.getRawValue();
-    const food = this.foods.find(food => foodId === food.id);
+    const { food, servingSize, servingSizeUnit, foodType } = this.form.getRawValue();
     const { protein, carbohydrate, fat, fiber } = food;
     const originalServingSize = food.servingSize;
     const dietFood = { 
@@ -75,9 +88,4 @@ export class FoodSelectorComponent implements OnInit {
         return 'Grasa';
     }
   }
-  private filter(value: string): Food[] {
-    const filterValue = value.toLowerCase();
-    return this.foods.filter(patient => patient.name.toLowerCase().includes(filterValue));
-  }
-
 }

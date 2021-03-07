@@ -8,7 +8,7 @@ export class FoodFirestoreService extends FirestoreService<Food> {
 
   protected basePath: string = 'foods';
 
-  constructor(protected firestore: AngularFirestore) {
-    super(firestore);
+  constructor(private angularFirestore: AngularFirestore) {
+    super(angularFirestore);
   }
 }

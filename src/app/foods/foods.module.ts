@@ -17,9 +17,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { CaloriesCalculatorModule } from '../shared/calories-calculator/calories-calculator.module';
 import { MatCardModule } from '@angular/material/card';
-import { FoodsService } from './services/foods.service';
-import { FoodFirestoreService } from './services/food.firestore.service';
-import { FoodsPageStoreService } from './services/foods-page.store.service';
 
 const routes = [
   {
@@ -63,11 +60,6 @@ const routes = [
     FlexLayoutModule,
     LolaLayoutModule,
     CaloriesCalculatorModule,
-  ],
-  providers: [
-    FoodsService,
-    FoodFirestoreService,
-    FoodsPageStoreService
   ]
 })
 export class FoodsModule { }

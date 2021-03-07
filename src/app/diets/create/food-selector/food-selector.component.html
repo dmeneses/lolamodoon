@@ -7,10 +7,10 @@
            placeholder="Seleccione uno..."
            aria-label="Alimento"
            matInput
-           formControlName="foodId"
+           formControlName="food"
            [matAutocomplete]="auto">
     <mat-autocomplete #auto="matAutocomplete" [displayWith]="showFood.bind(this)">
-      <mat-option *ngFor="let food of filteredFoods | async" [value]="food.foodId">
+      <mat-option *ngFor="let food of filteredFoods" [value]="food">
         {{food.name}}
       </mat-option>
     </mat-autocomplete>
