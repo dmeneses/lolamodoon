@@ -8,6 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LolaLayoutModule } from './shared/layout/lola-layout.module';
 import { CoreModule } from './core/core.module';
+import { PatientsCoreModule } from './shared/patients-core/patients-core.module';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { CoreModule } from './core/core.module';
     FlexLayoutModule,
     CoreModule,
     LolaLayoutModule,
+    PatientsCoreModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

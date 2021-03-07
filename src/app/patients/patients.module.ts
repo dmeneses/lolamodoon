@@ -15,9 +15,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { PatientsService } from './services/patients.service';
-import { PatientsPageStoreService } from './services/patients-page.store.service';
-import { PatientsFirestoreService } from './services/patients.firestore.service';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
@@ -74,11 +71,6 @@ const routes = [
     LolaLayoutModule,
     GenderModule,
     DietGoalModule,
-  ],
-  providers: [
-    PatientsService,
-    PatientsPageStoreService,
-    PatientsFirestoreService,
   ]
 })
 export class PatientsModule { }

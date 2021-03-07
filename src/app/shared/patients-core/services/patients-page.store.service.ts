@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { StoreService } from 'src/app/shared/models/firestore/store.service';
-import { PatientsPage } from '../patients-page';
+import { PatientsPage } from '../../../patients/patients-page';
 
 @Injectable()
 export class PatientsPageStoreService extends StoreService<PatientsPage> {

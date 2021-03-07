@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Patient } from 'src/app/shared/models/patient';
-import { PatientsService } from '../services/patients.service';
+import { PatientsService } from '../../shared/patients-core/services/patients.service';
 
 @Component({
   selector: 'app-list',

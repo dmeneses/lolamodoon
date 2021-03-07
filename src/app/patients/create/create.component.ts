@@ -5,7 +5,7 @@ import { ChartOptions, ChartType } from 'chart.js';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 
 import { Label, SingleDataSet } from 'ng2-charts';
-import { PatientsService } from 'src/app/patients/services/patients.service';
+import { PatientsService } from 'src/app/shared/patients-core/services/patients.service';
 import { Patient } from 'src/app/shared/models/patient';
 
 @Component({

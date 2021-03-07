@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, combineLatest } from 'rxjs';
+import { Observable, combineLatest, Subject } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
 import { Diet } from 'src/app/shared/models/diet';
 import { DietFirestoreService } from './diet.firestore.service';
@@ -7,7 +7,7 @@ import { DietsPageStoreService } from './diets-page.store.service';
 
 @Injectable()
 export class DietsService {
-
+  public test$ = new Subject();
   constructor(
     private firestore: DietFirestoreService,
     private store: DietsPageStoreService

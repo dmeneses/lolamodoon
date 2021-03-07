@@ -1,50 +1,60 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { Patient } from 'src/app/shared/models/patient';
-import { PatientMock } from 'src/app/shared/models/mocks/patient-mock';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
+import { combineLatest, Observable, Subject } from 'rxjs';
+import { map, takeUntil } from 'rxjs/operators';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { PatientsService } from 'src/app/shared/patients-core/services/patients.service';
 
 @Component({
   selector: 'app-patient-selector',
   templateUrl: './patient-selector.component.html',
   styleUrls: ['./patient-selector.component.scss']
 })
-export class PatientSelectorComponent implements OnInit {
-  patients: Patient[] = PatientMock;
-  filteredPatients: Observable<Patient[]>;
+export class PatientSelectorComponent implements OnInit, OnDestroy {
+  filteredPatients: Patient[] = []; 
   form = new FormGroup({
-    patientId: new FormControl(''),
+    patient: new FormControl(''),
   });
+  availablePatients$: Observable<Patient[]>;
+  unsubscribe$ = new Subject()
 
-  constructor(private bottomSheetRef: MatBottomSheetRef<PatientSelectorComponent>) { }
+  constructor(private bottomSheetRef: MatBottomSheetRef<PatientSelectorComponent>,
+    private patientsService: PatientsService,
+    private ref: ChangeDetectorRef) { }
 
   ngOnInit(): void {
-    this.filteredPatients = this.form.controls.patientId.valueChanges
-      .pipe(
-        startWith(''),
-        map(value => this.filter(value))
-      );
+    this.availablePatients$ = this.patientsService.patients$;
+
+    combineLatest([
+      this.form.controls.patient.valueChanges,
+      this.availablePatients$
+    ]).pipe(
+      takeUntil(this.unsubscribe$),
+      map(([patientName, patients]) => typeof patientName === 'string' ?
+        patients.filter(patient => patient.name.toLowerCase().includes(patientName.toLowerCase())) : []
+      )
+    ).subscribe((results) => {
+      this.filteredPatients = results;
+      this.ref.detectChanges();
+    });
   }
 
-  showPatient(patientId: string) {
-    if (patientId) {
-      const {name} = this.patients.find(patient => patientId === patient.id);
-      return `${name}`;
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
+  showPatient(patient: Patient) {
+    if (patient) {
+      return `${patient.name}`;
     }
 
     return '';
   }
 
   addPatient() {
-    const { patientId } = this.form.getRawValue();
-    const patient = this.patients.find(patient => patientId === patient.id)
+    const { patient } = this.form.getRawValue();
     this.bottomSheetRef.dismiss(patient);
-  }
-
-  private filter(value: string): Patient[] {
-    const filterValue = value.toLowerCase();
-    return this.patients.filter(patient => patient.name.toLowerCase().includes(filterValue));
   }
 }

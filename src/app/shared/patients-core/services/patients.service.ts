@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, combineLatest } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
+import { PatientsPage } from 'src/app/patients/patients-page';
 import { Patient } from 'src/app/shared/models/patient';
 import { PatientsPageStoreService } from './patients-page.store.service';
 import { PatientsFirestoreService } from './patients.firestore.service';
@@ -30,7 +31,7 @@ export class PatientsService {
   get filter$() {
     return this.store.state$.pipe(map(state => state.filter));
   }
-
+ 
   get filteredPatients$(): Observable<Patient[]> {
     return combineLatest([
       this.patients$,
