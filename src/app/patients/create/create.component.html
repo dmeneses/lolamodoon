@@ -1,7 +1,7 @@
 <ng-template #formInput let-input="input" let-group="group">
   <mat-form-field class="form-field" appearance="outline" [formGroup]="group">
     <mat-label> {{input.label}} </mat-label>
-    <input matInput [formControlName]="input.name">
+    <input [type]="input.type ? input.type : 'text'" matInput [formControlName]="input.name">
     <span *ngIf="input.suffix" matSuffix>{{ input.suffix }}</span>
     <mat-error *ngIf="group.get(input.name).touched || group.get(input.name).invalid">
       <span *ngIf="group.get(input.name).errors?.required">El campo es obligatorio.</span>
@@ -44,7 +44,13 @@
         </mat-card-header>
         <mat-card-content fxLayout="column">
           <ng-container *ngTemplateOutlet="formInput; context: {input: {name: 'name', label: 'Nombre'}, group: createPatientForm2}"></ng-container>
-          <ng-container *ngTemplateOutlet="formInput; context: {input: {name: 'weight', label: 'Peso', suffix: 'Kgs'}, group: createPatientForm2}"></ng-container>
+          <ng-container *ngTemplateOutlet="formInput; context: {input: {name: 'pathology', label: 'Patología'}, group: createPatientForm2}"></ng-container>
+          <ng-container *ngTemplateOutlet="formInput; context: {input: {name: 'age', label: 'Edad', suffix: 'Años', type: 'number'}, group: createPatientForm2}"></ng-container>
+          <ng-container *ngTemplateOutlet="formSelect; context: {input: {name: 'gender', label: 'Sexo', options: genderOptions}, group: createPatientForm2}"></ng-container>
+          <div fxLayout="row" fxLayoutGap="10px" class="shared-fields">
+            <ng-container *ngTemplateOutlet="formInput; context: {input: {name: 'weight', label: 'Peso', suffix: 'Kgs', type: 'number'}, group: createPatientForm2}"></ng-container>
+            <ng-container *ngTemplateOutlet="formInput; context: {input: {name: 'height', label: 'Altura', suffix: 'cm', type: 'number'}, group: createPatientForm2}"></ng-container>
+          </div>
           <ng-container *ngTemplateOutlet="formSelect; context: {input: {name: 'activityLevel', label: 'Nivel de Actividad', options: activityLevelOptions}, group: createPatientForm2}"></ng-container>
           <div *ngIf="createPatientForm2.get('activityLevel').value === 0">
             <ng-container *ngTemplateOutlet="formSelect; context: {input: {name: 'activityLevelMeasure', label: 'Valor en Nivel de Actividad', options: activityLevelMeasure[0]}, group: createPatientForm2}"></ng-container>
@@ -58,12 +64,7 @@
           <div *ngIf="createPatientForm2.get('activityLevel').value === 3">
             <ng-container *ngTemplateOutlet="formSelect; context: {input: {name: 'activityLevelMeasure', label: 'Valor en Nivel de Actividad', options: activityLevelMeasure[3]}, group: createPatientForm2}"></ng-container>
           </div>
-  
-          <mat-form-field class="form-field" appearance="outline">
-            <mat-label> KCal de Mantenimiento </mat-label>
-            <input matInput [value]="maintenanceCalories" disabled>
-            <span matSuffix>Kcals</span>
-          </mat-form-field>
+
         </mat-card-content>
       </mat-card>
       <mat-card>
@@ -73,7 +74,6 @@
           </mat-card-title>
         </mat-card-header>
         <mat-card-content fxLayout="column">
-          <ng-container *ngTemplateOutlet="formSelect; context: {input: {name: 'gender', label: 'Sexo', options: genderOptions}, group: createPatientForm2}"></ng-container>
           <ng-container *ngTemplateOutlet="formSelect; context: {input: {name: 'corporalFatPercentage', label: '% Grasas Corporal', options: corporalFatPercentageOptions}, group: createPatientForm2}"></ng-container>
           <ng-container *ngTemplateOutlet="formSelect; context: {input: {name: 'dietGoal', label: 'Objetivo', options: dietGoalOptions}, group: createPatientForm2}"></ng-container>
           <div *ngIf="createPatientForm2.get('dietGoal').value === 'muscle-gain'">
@@ -85,22 +85,45 @@
           <div *ngIf="createPatientForm2.get('dietGoal').value === 'fat-loss'">
             <ng-container *ngTemplateOutlet="formInput; context: {input: {name: 'refeedsPerWeek', label: 'Refeeds Por Semana'}, group: createPatientForm2}"></ng-container>
           </div>
-          <mat-form-field class="form-field" appearance="outline">
-            <mat-label *ngIf="createPatientForm2.get('dietGoal').value === 'fat-loss'">Calorías Objetivo en Déficit</mat-label>
-            <mat-label *ngIf="createPatientForm2.get('dietGoal').value === 'muscle-gain'">Calorías Objetivo</mat-label>
-            <input matInput [value]="targetCalories" disabled>
-            <span matSuffix>Kcals</span>
-          </mat-form-field>
-          <mat-form-field *ngIf="createPatientForm2.get('dietGoal').value === 'fat-loss'" class="form-field" appearance="outline">
-            <mat-label>Calorías Objetivo en Dias de Refeed</mat-label>
-            <input matInput [value]="refeedTargetCalories" disabled>
-            <span matSuffix>Kcals</span>
-          </mat-form-field>
-          <mat-form-field *ngIf="createPatientForm2.get('dietGoal').value === 'fat-loss'" class="form-field" appearance="outline">
-            <mat-label>Déficit Semanal Generado por la Dieta</mat-label>
-            <input matInput [value]="dietDeficit" disabled>
-            <span matSuffix>Kcals</span>
-          </mat-form-field>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            Resultados
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content fxLayout="column">
+          <h2>Calorías de Mantenimiento</h2>
+          <p>{{maintenanceCalories}}<span> Kcals</span></p>
+  
+          <h2>Metabolismo Basal</h2>
+          <p>{{basalMetabolicRate}}<span> Calorías/Día</span></p>
+
+          <h2>
+            <span *ngIf="createPatientForm2.get('dietGoal').value === 'fat-loss'">
+              Calorías Objetivo en Déficit
+            </span>
+            <span *ngIf="createPatientForm2.get('dietGoal').value === 'muscle-gain'">
+              Calorías Objetivo
+            </span>
+          </h2>
+          <p>{{targetCalories}}<span> Kcals</span></p>
+
+          <div *ngIf="createPatientForm2.get('dietGoal').value === 'fat-loss'">
+            <h2>
+                Calorías Objetivo en Dias de Refeed
+            </h2>
+            <p>{{refeedTargetCalories}}<span> Kcals</span></p>
+          </div>
+
+          <div *ngIf="createPatientForm2.get('dietGoal').value === 'fat-loss'">
+            <h2>
+              Déficit Semanal Generado por la Dieta
+            </h2>
+            <p>{{dietDeficit}}<span> Kcals</span></p>
+          </div>
         </mat-card-content>
       </mat-card>
     </div>

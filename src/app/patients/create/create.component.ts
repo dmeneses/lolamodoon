@@ -14,8 +14,11 @@ export class CreateComponent implements OnInit {
   createPatientForm2 = new FormGroup({
     id: new FormControl(null),
     name: new FormControl('', [Validators.required]),
+    pathology: new FormControl('', [Validators.required]),
+    age: new FormControl(null, [Validators.required]),
     gender: new FormControl('female', [Validators.required]),
     weight: new FormControl(0, [Validators.required]),
+    height: new FormControl(0, [Validators.required]),
     activityLevel: new FormControl(0, [Validators.required]),
     activityLevelMeasure: new FormControl(1.3, [Validators.required]),
     corporalFatPercentage: new FormControl(10, [Validators.required]),
@@ -28,6 +31,7 @@ export class CreateComponent implements OnInit {
 
   isEdit = false;
   maintenanceCalories = 0;
+  basalMetabolicRate = 0;
   targetCalories = 0;
   refeedTargetCalories = 0;
   dietDeficit = 0;
@@ -198,6 +202,9 @@ export class CreateComponent implements OnInit {
           - (3500 * modifiedWeight * +value.dietGoalPace) / (7 - +value.refeedsPerWeek));
         this.dietDeficit = Math.round(3500 * modifiedWeight * +value.dietGoalPace);
       }
+
+      this.basalMetabolicRate = Math.round((10 * +value.weight) + (6.25 * +value.height) - 5 * (+value.age) 
+        + (value.gender === 'male' ? +5 : -161));
     });
 
     const { id } = this.activatedRoute.snapshot.params;
