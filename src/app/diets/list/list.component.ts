@@ -28,4 +28,7 @@ export class ListComponent implements OnInit {
     this.diets$ = this.dietsService.diets$;
   }
 
+  deleteDiet(diet: Diet) {
+    this.dietsService.delete(diet.id).then();
+  }
 }

@@ -5,11 +5,11 @@
       <button mat-raised-button color="primary" (click)="addPatient()">Añadir Paciente</button>
     </div>
     <mat-expansion-panel expanded>
-      <div *ngIf="patients.length === 0" style="padding-top: 20px;">
+      <div *ngIf="patients$.value.length === 0" style="padding-top: 20px;">
         <span class="mat-subheading-2">No existen pacientes asignados a esta dieta.</span>
       </div>
       <mat-selection-list #pacients>
-        <mat-list-option *ngFor="let pacient of patients">
+        <mat-list-option *ngFor="let pacient of patients$ | async">
           {{pacient.name}} {{pacient.lastname}}
         </mat-list-option>
       </mat-selection-list>
@@ -95,8 +95,10 @@
   <div class="footer" fxLayout="column">
     <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="10px">
       <div *ngIf="showError" class="mat-warn">Tiene que agregar al menos un paciente y una sección.</div>
-      <button mat-raised-button color="primary" (click)="createDiet()">Crear Dieta</button>
-      <button mat-raised-button color="warn">Cancelar</button>
+
+      <a mat-raised-button color="basic" [routerLink]="[ '../' ]">Cancelar</a>
+      <button *ngIf="!isEdit" mat-raised-button color="primary" (click)="createDiet()">Guardar</button>
+      <button *ngIf="isEdit" mat-raised-button color="primary" (click)="updateDiet()">Actualizar</button>
     </div>
   </div>
 </div>

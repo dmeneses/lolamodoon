@@ -15,6 +15,10 @@
           {{patient.name}}
         </mat-option>
       </mat-autocomplete>
+      <mat-error *ngIf="form.controls.patient.touched || form.controls.patient.invalid">
+        <span *ngIf="form.controls.patient.errors?.required">El campo es obligatorio.</span>
+        <span *ngIf="form.controls.patient.errors?.pattern">El campo es inválido.</span>
+      </mat-error>
     </mat-form-field>
   </form>
 

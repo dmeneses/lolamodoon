@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { Patient } from 'src/app/shared/models/patient';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { combineLatest, Observable, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
@@ -14,7 +14,7 @@ import { PatientsService } from 'src/app/shared/patients-core/services/patients.
 export class PatientSelectorComponent implements OnInit, OnDestroy {
   filteredPatients: Patient[] = []; 
   form = new FormGroup({
-    patient: new FormControl(''),
+    patient: new FormControl(null, Validators.required),
   });
   availablePatients$: Observable<Patient[]>;
   unsubscribe$ = new Subject()
@@ -54,6 +54,10 @@ export class PatientSelectorComponent implements OnInit, OnDestroy {
   }
 
   addPatient() {
+    if (this.form.invalid) {
+      return;
+    }
+
     const { patient } = this.form.getRawValue();
     this.bottomSheetRef.dismiss(patient);
   }

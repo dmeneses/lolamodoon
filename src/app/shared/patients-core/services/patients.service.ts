@@ -8,7 +8,6 @@ import { PatientsFirestoreService } from './patients.firestore.service';
 
 @Injectable()
 export class PatientsService {
-
   constructor(
     private firestore: PatientsFirestoreService,
     private store: PatientsPageStoreService
@@ -63,6 +62,16 @@ export class PatientsService {
 
   get totalPatients$(): Observable<number> {
     return this.store.state$.pipe(map(state => state.totalPatients))
+  }
+
+  getFilteredDietPatients(patientsIds: string[]): Observable<Patient[]> {
+    return this.patients$.pipe(
+      map((patients) => {
+        return patients.filter(patient => {
+          return patientsIds.includes(patient.id);
+        })
+      })
+    )
   }
 
   create(patient: Patient) {

@@ -4,7 +4,6 @@ import { DietsComponent } from './diets.component';
 import { RouterModule } from '@angular/router';
 import { ListComponent } from './list/list.component';
 import { CreateComponent } from './create/create.component';
-import { ViewComponent } from './view/view.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { LolaLayoutModule } from '../shared/layout/lola-layout.module';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -41,15 +40,19 @@ const routes = [
         component: CreateComponent
       },
       {
+        path: ':id/edit',
+        component: CreateComponent
+      },
+      {
         path: ':id',
-        component: ViewComponent
+        component: CreateComponent
       }
     ]
   }
 ];
 
 @NgModule({
-  declarations: [DietsComponent, ListComponent, CreateComponent, ViewComponent, PatientSelectorComponent, FoodSelectorComponent, FoodSectionSelectorComponent],
+  declarations: [DietsComponent, ListComponent, CreateComponent, PatientSelectorComponent, FoodSelectorComponent, FoodSectionSelectorComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),

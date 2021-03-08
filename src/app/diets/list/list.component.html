@@ -16,21 +16,20 @@
 
     <ng-container matColumnDef="patientsCount">
       <th mat-header-cell *matHeaderCellDef> Pacientes Asignados </th>
-      <td mat-cell *matCellDef="let element"> {{element.patientsCount}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.patientsIds?.length}} </td>
     </ng-container>
 
     <ng-container matColumnDef="sectionsCount">
       <th mat-header-cell *matHeaderCellDef> Secciones </th>
-      <td mat-cell *matCellDef="let element"> {{element.sectionsCount}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.dietSections?.length}} </td>
     </ng-container>
 
     <ng-container matColumnDef="options">
       <th mat-header-cell *matHeaderCellDef>Opciones</th>
       <td mat-cell *matCellDef="let element">
         <div fxLayout="row" fxLayoutGap="10px">
-          <mat-icon color="primary">visibility</mat-icon>
-          <mat-icon color="primary">edit</mat-icon>
-          <mat-icon color="primary">delete</mat-icon>
+          <a [routerLink]="[ '.', element.id ]"><mat-icon color='primary'>edit</mat-icon></a>
+          <a (click)="deleteDiet(element)" style="cursor: pointer;"><mat-icon color="primary" >delete</mat-icon></a>
         </div>
       </td>
     </ng-container>
