@@ -1,4 +1,4 @@
-<div fxLayout="column" fxLayoutGap="30px">
+<div class="create-diet" fxLayout="column" fxLayoutGap="30px">
   <div fxLayout="column">
     <div fxLayoutAlign="space-between start">
       <span class="mat-title">Pacientes Asignados</span>
@@ -90,6 +90,13 @@
           </mat-action-row>
         </mat-expansion-panel>
       </mat-accordion>
+    </div>
+  </div>
+  <div class="footer" fxLayout="column">
+    <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="10px">
+      <div *ngIf="showError" class="mat-warn">Tiene que agregar al menos un paciente y una sección.</div>
+      <button mat-raised-button color="primary" (click)="createDiet()">Crear Dieta</button>
+      <button mat-raised-button color="warn">Cancelar</button>
     </div>
   </div>
 </div>

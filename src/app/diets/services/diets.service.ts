@@ -7,7 +7,6 @@ import { DietsPageStoreService } from './diets-page.store.service';
 
 @Injectable()
 export class DietsService {
-  public test$ = new Subject();
   constructor(
     private firestore: DietFirestoreService,
     private store: DietsPageStoreService

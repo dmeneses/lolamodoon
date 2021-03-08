@@ -5,8 +5,8 @@ export interface Diet {
   name: string;
   patientsIds: string[];
   dietSections: DietSection[];
-  createdDate: Date;
-  updatedDate: Date;
+  createdDate?: Date;
+  updatedDate?: Date;
 }
 
 export interface DietSection {

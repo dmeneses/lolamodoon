@@ -1,6 +1,6 @@
 <span class="mat-title">Añadir Alimento</span>
 
-<form fxLayout="column" fxLayoutAlign="start start" [formGroup]="form">
+<form fxLayout="column" fxLayoutAlign="start start" [formGroup]="form" (ngSubmit)="addFood()">
   <mat-form-field>
     <mat-label>Alimento</mat-label>
     <input type="text"
@@ -14,15 +14,32 @@
         {{food.name}}
       </mat-option>
     </mat-autocomplete>
-  </mat-form-field>
-  <mat-form-field class="form-field" appearance="outline">
-    <mat-label> Cantidad </mat-label>
-    <input matInput formControlName="servingSize">
-    <mat-error *ngIf="form.controls.servingSize.touched || form.controls.servingSize.invalid">
-      <span *ngIf="form.controls.servingSize.errors?.required">El campo es obligatorio.</span>
-      <span *ngIf="form.controls.servingSize.errors?.pattern">El campo es inválido.</span>
+    <mat-error *ngIf="form.controls.food.touched || form.controls.food.invalid">
+      <span *ngIf="form.controls.food.errors?.required">El campo es obligatorio.</span>
+      <span *ngIf="form.controls.food.errors?.pattern">El campo es inválido.</span>
     </mat-error>
   </mat-form-field>
+  <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="space-between center">
+    <mat-form-field class="form-field" appearance="outline">
+      <mat-label> Cantidad </mat-label>
+      <input matInput formControlName="servingSize">
+      <span matSuffix>grs</span>
+      <mat-error *ngIf="form.controls.servingSize.touched || form.controls.servingSize.invalid">
+        <span *ngIf="form.controls.servingSize.errors?.required">El campo es obligatorio.</span>
+        <span *ngIf="form.controls.servingSize.errors?.pattern">El campo es inválido.</span>
+      </mat-error>
+    </mat-form-field>
+    <mat-icon>compare_arrows</mat-icon>
+    <mat-form-field class="form-field" appearance="outline" [formGroup]="form2">
+      <mat-label> Calorias </mat-label>
+      <input matInput formControlName='servingSizeInCalories'>
+      <span matSuffix>kcal</span>
+      <mat-error *ngIf="form2.controls.servingSizeInCalories.touched || form2.controls.servingSizeInCalories.invalid">
+        <span *ngIf="form2.controls.servingSizeInCalories.errors?.required">El campo es obligatorio.</span>
+        <span *ngIf="form2.controls.servingSizeInCalories.errors?.pattern">El campo es inválido.</span>
+      </mat-error>
+    </mat-form-field>
+  </div>
   <mat-form-field class="form-field" appearance="outline">
     <mat-label>Tipo</mat-label>
     <mat-select formControlName="foodType">
@@ -30,10 +47,11 @@
         {{getFoodTypeName(type)}}
       </mat-option>
     </mat-select>
-    <mat-error *ngIf="form.get('foodType').hasError('required')">
-      El campo es obligatorio.
+    <mat-error *ngIf="form.controls.foodType.touched || form.controls.foodType.invalid">
+      <span *ngIf="form.controls.foodType.errors?.required">El campo es obligatorio.</span>
+      <span *ngIf="form.controls.foodType.errors?.pattern">El campo es inválido.</span>
     </mat-error>
   </mat-form-field>
-</form>
 
-<button mat-raised-button color="primary" (click)="addFood()">Añadir</button>
+  <button type="submit" mat-raised-button color="primary">Añadir</button>
+</form>

@@ -20,17 +20,14 @@ export class CreateComponent implements OnInit {
   displayedColumns: string[] = ['name', 'servingSize', 'protein', 'carbohydrate', 'fat', 'fiber', 'calories', 'options',];
   patientsLoading$: Observable<boolean>;
   availablePatients$: Observable<Patient[]>;
-  ref: MatBottomSheetRef;
+  showError = false;
+
   constructor(private bottomSheet: MatBottomSheet, private patientsService: PatientsService,
     private dietsService: DietsService) { }
 
   ngOnInit(): void {
     this.patientsLoading$ = this.patientsService.loading$;
     this.availablePatients$ = this.patientsService.patients$;
-    this.dietsService.test$.subscribe((a) => {
-      console.log('connected!', a)
-      this.ref.dismiss();
-    });
   }
 
   addSection(): void {
@@ -43,8 +40,8 @@ export class CreateComponent implements OnInit {
   }
 
   addFoodToSection(index: number): void {
-    this.ref = this.bottomSheet.open<FoodSelectorComponent, any, DietFood>(FoodSelectorComponent);
-    this.ref.afterDismissed().subscribe((food: DietFood) => {
+    const ref = this.bottomSheet.open<FoodSelectorComponent, any, DietFood>(FoodSelectorComponent);
+    ref.afterDismissed().subscribe((food: DietFood) => {
       if (food) {
         this.sections[index].foods = [...this.sections[index].foods, food];
       }
@@ -56,9 +53,8 @@ export class CreateComponent implements OnInit {
   }
 
   addPatient(): void {
-    this.ref = this.bottomSheet.open(PatientSelectorComponent);
-    this.ref.afterDismissed().subscribe((patient: Patient) => {
-      console.log('aaa')
+    const ref = this.bottomSheet.open(PatientSelectorComponent);
+    ref.afterDismissed().subscribe((patient: Patient) => {
       if (patient) {
         this.patients.push(patient);
       }
@@ -67,6 +63,20 @@ export class CreateComponent implements OnInit {
 
   deletePatients() {
 
+  }
+
+  createDiet() {
+    if (this.sections.length === 0 || this.patients.length === 0) {
+      this.showError = true;
+      return;
+    } 
+
+    this.showError = false;
+    this.dietsService.create({
+      name: 'dieta',
+      patientsIds: this.patients.map(patient => patient.id),
+      dietSections: this.sections,
+    });
   }
 }
 

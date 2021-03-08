@@ -1,8 +1,9 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { combineLatest, Observable, Subject } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
+import { map, takeUntil, tap } from 'rxjs/operators';
+import { CaloriesCalculatorPipe } from 'src/app/shared/calories-calculator/calories-calculator.pipe';
 import { FoodsService } from 'src/app/shared/foods-core/services/foods.service';
 import { Food } from 'src/app/shared/models/food';
 import { FoodMock } from 'src/app/shared/models/mocks/food-mock';
@@ -14,16 +15,23 @@ import { FoodMock } from 'src/app/shared/models/mocks/food-mock';
 })
 export class FoodSelectorComponent implements OnInit {
   foodTypes = ['protein', 'fat', 'carbohydrate'];
-  foods: Food[] = FoodMock;
   filteredFoods: Food[];
   form = new FormGroup({
-    food: new FormControl(''),
-    servingSize: new FormControl(0),
-    servingSizeUnit: new FormControl('grams'),
-    foodType: new FormControl('Proteína'),
+    food: new FormControl(null, Validators.required),
+    servingSize: new FormControl(null, Validators.required),
+    servingSizeUnit: new FormControl('grams', Validators.required),
+    foodType: new FormControl('protein', Validators.required),
   });
   availableFoods$: Observable<Food[]>;
   unsubscribe$ = new Subject();
+
+  form2 = new FormGroup({
+    servingSizeInCalories: new FormControl(null, Validators.required),
+  });
+
+  calorieCount = 0;
+  servingSize = 0;
+
   constructor(private bottomSheetRef: MatBottomSheetRef<FoodSelectorComponent>,
     private foodsService: FoodsService,
     private ref: ChangeDetectorRef) { }
@@ -31,6 +39,23 @@ export class FoodSelectorComponent implements OnInit {
   ngOnInit(): void {
     this.availableFoods$ = this.foodsService.foods$;
     
+    this.form.controls.food.valueChanges.subscribe((foodInfo) => {
+      this.calorieCount = new CaloriesCalculatorPipe().transform(foodInfo);
+      this.servingSize = foodInfo.servingSize;
+    });
+
+    this.form.controls.servingSize.valueChanges.subscribe((servingSize) => {
+      if (this.calorieCount > 0 && this.servingSize > 0) {
+        this.form2.patchValue({ servingSizeInCalories: Math.round(servingSize * this.calorieCount / this.servingSize) }, {emitEvent: false});
+      }
+    });
+
+    this.form2.controls.servingSizeInCalories.valueChanges.subscribe((servingSizeInCalories) => {
+      if (this.calorieCount > 0 && this.servingSize > 0) {
+        this.form.patchValue({ servingSize: Math.round(servingSizeInCalories *  this.servingSize / this.calorieCount) }, {emitEvent: false});
+      }
+    });
+
     combineLatest([
       this.form.controls.food.valueChanges,
       this.availableFoods$
@@ -59,6 +84,10 @@ export class FoodSelectorComponent implements OnInit {
   }
 
   addFood() {
+    if (this.form.invalid || this.form2.invalid) {
+      return;
+    }
+
     const { food, servingSize, servingSizeUnit, foodType } = this.form.getRawValue();
     const { protein, carbohydrate, fat, fiber } = food;
     const originalServingSize = food.servingSize;
