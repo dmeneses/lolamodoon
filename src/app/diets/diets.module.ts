@@ -24,6 +24,7 @@ import { FoodSectionSelectorComponent } from './create/food-section-selector/foo
 import { DietsService } from './services/diets.service';
 import { DietFirestoreService } from './services/diet.firestore.service';
 import { DietsPageStoreService } from './services/diets-page.store.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 const routes = [
@@ -70,6 +71,7 @@ const routes = [
     MatBottomSheetModule,
     MatAutocompleteModule,
     MatSelectModule,
+    MatProgressSpinnerModule,
     FlexLayoutModule,
     LolaLayoutModule,
   ],

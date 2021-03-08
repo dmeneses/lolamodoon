@@ -25,7 +25,7 @@ export class CreateComponent implements OnInit, OnDestroy {
   ];
   displayedColumns: string[] = ['name', 'servingSize', 'protein', 'carbohydrate', 'fat', 'fiber', 'calories', 'options',];
   patientsLoading$: Observable<boolean>;
-  availablePatients$: Observable<Patient[]>;
+  dietsLoading$: Observable<boolean>;
   unsubscribe$ = new Subject();
   showError = false;
   isEdit = false;
@@ -38,7 +38,7 @@ export class CreateComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.patientsLoading$ = this.patientsService.loading$;
-    this.availablePatients$ = this.patientsService.patients$;
+    this.dietsLoading$ = this.dietsService.loading$;
    
     const { id } = this.activatedRoute.snapshot.params;
     if (id) {
@@ -93,8 +93,10 @@ export class CreateComponent implements OnInit, OnDestroy {
     });
   }
 
-  deletePatients() {
-
+  deletePatient(patient: Patient, index: number) {
+    const patients = [...this.patients$.value];
+    patients.splice(index, 1);
+    this.patients$.next(patients);
   }
 
   createDiet() {
