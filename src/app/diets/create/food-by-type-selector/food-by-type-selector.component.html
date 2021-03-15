@@ -1,0 +1,39 @@
+<span class="mat-title">Añadir Alimentos Por Tipo</span>
+
+<form fxLayout="column" fxLayoutAlign="start start" [formGroup]="form" (ngSubmit)="addFood()">
+
+  <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="space-between center">
+    <mat-form-field class="form-field" appearance="outline">
+      <mat-label>Tipo</mat-label>
+      <mat-select formControlName="foodType">
+        <mat-option *ngFor="let type of foodTypes" [value]="type">
+          {{getFoodTypeName(type)}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.controls.foodType.touched || form.controls.foodType.invalid">
+        <span *ngIf="form.controls.foodType.errors?.required">El campo es obligatorio.</span>
+        <span *ngIf="form.controls.foodType.errors?.pattern">El campo es inválido.</span>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-field" appearance="outline">
+      <mat-label> Calorias </mat-label>
+      <input matInput formControlName='calories'>
+      <span matSuffix>kcal</span>
+      <mat-error *ngIf="form.controls.calories.touched || form.controls.calories.invalid">
+        <span *ngIf="form.controls.calories.errors?.required">El campo es obligatorio.</span>
+        <span *ngIf="form.controls.calories.errors?.pattern">El campo es inválido.</span>
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="food-list">
+    <mat-selection-list formControlName="foods">
+      <mat-list-option *ngFor="let food of availableFoods$ | async" [value]="food">
+        {{ food.name }}
+      </mat-list-option>
+    </mat-selection-list>
+  </div>
+
+  <button type="submit" mat-raised-button color="primary">Añadir</button>
+</form>

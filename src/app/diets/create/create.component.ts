@@ -10,6 +10,7 @@ import { Patient } from 'src/app/shared/models/patient';
 import { PdfGenerator } from 'src/app/shared/models/pdf-generator';
 import { PatientsService } from 'src/app/shared/patients-core/services/patients.service';
 import { DietsService } from '../services/diets.service';
+import { FoodByTypeSelectorComponent } from './food-by-type-selector/food-by-type-selector.component';
 import { FoodSectionSelectorComponent } from './food-section-selector/food-section-selector.component';
 import { FoodSelectorComponent } from './food-selector/food-selector.component';
 import { PatientSelectorComponent } from './patient-selector/patient-selector.component';
@@ -83,7 +84,12 @@ export class CreateComponent implements OnInit, OnDestroy {
   }
 
   addFoodsByType(index: number): void {
-    
+    const ref = this.bottomSheet.open<FoodByTypeSelectorComponent, any, DietFood[]>(FoodByTypeSelectorComponent);
+    ref.afterDismissed().subscribe((foods: DietFood[]) => {
+      if (foods) {
+        this.sections[index].foods = [...this.sections[index].foods, ...foods];
+      }
+    });
   }
 
   deleteSection(index: number): void {

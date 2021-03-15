@@ -25,6 +25,7 @@ import { DietsService } from './services/diets.service';
 import { DietFirestoreService } from './services/diet.firestore.service';
 import { DietsPageStoreService } from './services/diets-page.store.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { FoodByTypeSelectorComponent } from './create/food-by-type-selector/food-by-type-selector.component';
 
 
 const routes = [
@@ -53,7 +54,7 @@ const routes = [
 ];
 
 @NgModule({
-  declarations: [DietsComponent, ListComponent, CreateComponent, PatientSelectorComponent, FoodSelectorComponent, FoodSectionSelectorComponent],
+  declarations: [DietsComponent, ListComponent, CreateComponent, PatientSelectorComponent, FoodSelectorComponent, FoodSectionSelectorComponent, FoodByTypeSelectorComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
