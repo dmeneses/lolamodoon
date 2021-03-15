@@ -73,11 +73,11 @@ export class PdfGenerator {
             ${section.foods.reduce((foodTable, food , index) => foodTable + `
             <tr class="${(food.foodType === 'protein') ? 'protein-row': (food.foodType === 'fat') ? 'fat-row' : 'carb-row' }">
               <td class="left-align">${food.food.name}</td>
-              <td>${food.servingSize}</td>
-              <td>${food.protein}</td>
-              <td>${food.carbohydrate}</td>
-              <td>${food.fat}</td>
-              <td>${food.fiber}</td>
+              <td>${Math.round(food.servingSize)}</td>
+              <td>${Math.round(food.protein)}</td>
+              <td>${Math.round(food.carbohydrate)}</td>
+              <td>${Math.round(food.fat)}</td>
+              <td>${Math.round(food.fiber)}</td>
               <td>${Math.round(food.calories)}</td>
             </tr>
             ${section.foods.length === index + 1 && sectionIndex < sections.length - 1 ? '<tr class="separator"><td colspan="7"></td></tr>' : ''}
