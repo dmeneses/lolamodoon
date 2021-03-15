@@ -9,7 +9,7 @@ export class CaloriesCalculatorPipe implements PipeTransform {
   transform(value: Food, ...args: unknown[]): number {
     if (!value) return 0;
     const {protein, carbohydrate, fat, fiber} = value;
-    return protein * 4 + carbohydrate * 4 + fat * 8;
+    return Math.round(protein * 4 + carbohydrate * 4 + fat * 8);
   }
 
 }

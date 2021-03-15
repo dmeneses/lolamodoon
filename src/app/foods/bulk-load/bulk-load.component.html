@@ -1,0 +1,13 @@
+
+<div fxLayout="row" fxLayoutAlign="center center">
+  <mat-spinner *ngIf="loading"></mat-spinner>
+</div>
+
+<form [formGroup]="foods" *ngIf="!loading" fxLayout="column">
+  <mat-form-field class="example-form-field">
+    <mat-label>Foods in JSON Format</mat-label>
+    <textarea matInput type="text" formControlName="jsonFoods" rows="20"></textarea>
+  </mat-form-field>
+
+  <button mat-raised-button (click)="saveFoods()">Save Foods</button>
+</form>

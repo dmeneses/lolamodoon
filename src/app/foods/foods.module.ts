@@ -17,6 +17,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { CaloriesCalculatorModule } from '../shared/calories-calculator/calories-calculator.module';
 import { MatCardModule } from '@angular/material/card';
+import { BulkLoadComponent } from './bulk-load/bulk-load.component';
 
 const routes = [
   {
@@ -32,19 +33,23 @@ const routes = [
         component: CreateComponent
       },
       {
+        path: 'bulk-load',
+        component: BulkLoadComponent
+      },
+      {
         path: ':id/edit',
         component: CreateComponent
       },
       {
         path: ':id',
         component: CreateComponent
-      }
+      },
     ]
   }
 ];
 
 @NgModule({
-  declarations: [ListComponent, FoodsComponent, CreateComponent],
+  declarations: [ListComponent, FoodsComponent, CreateComponent, BulkLoadComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
