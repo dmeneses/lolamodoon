@@ -27,6 +27,9 @@ export class BulkLoadComponent implements OnInit {
 
       for (const food of actualFoods) {
         delete food.calories;
+        food.description = '';
+        food.servingSize = 100;
+        food.servingSizeUnit = 'grams';
         await this.foodsService.create(food);
       }
 
