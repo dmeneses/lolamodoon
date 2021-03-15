@@ -1,11 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { Router, ActivatedRoute } from '@angular/router';
+import * as printJS from 'print-js';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Diet, DietFood, DietSection } from 'src/app/shared/models/diet';
 import { Food } from 'src/app/shared/models/food';
 import { Patient } from 'src/app/shared/models/patient';
+import { PdfGenerator } from 'src/app/shared/models/pdf-generator';
 import { PatientsService } from 'src/app/shared/patients-core/services/patients.service';
 import { DietsService } from '../services/diets.service';
 import { FoodSectionSelectorComponent } from './food-section-selector/food-section-selector.component';
@@ -80,6 +82,10 @@ export class CreateComponent implements OnInit, OnDestroy {
     });
   }
 
+  addFoodsByType(index: number): void {
+    
+  }
+
   deleteSection(index: number): void {
     this.sections.splice(index, 1);
   }
@@ -129,6 +135,15 @@ export class CreateComponent implements OnInit, OnDestroy {
       dietSections: this.sections,
     }).then(() => {
       this.router.navigate(['diets']);
+    });
+  }
+
+  printDiet() {
+    const patients = this.patients$.value;
+    printJS({
+      type: 'raw-html',
+      printable: PdfGenerator.generatePDF(this.sections, patients[0]),
+      style: PdfGenerator.generateStyles()
     });
   }
 }

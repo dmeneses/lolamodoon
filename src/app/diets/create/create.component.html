@@ -5,7 +5,7 @@
   <div fxLayout="column" *ngIf="(dietsLoading$ | async) === false && (patientsLoading$ | async) === false">
     <div fxLayoutAlign="space-between start">
       <span class="mat-title">Pacientes Asignados</span>
-      <button mat-raised-button color="primary" (click)="addPatient()">Añadir Paciente</button>
+      <button *ngIf="patients$.value.length === 0" mat-raised-button color="primary" (click)="addPatient()">Añadir Paciente</button>
     </div>
     <mat-expansion-panel expanded>
       <div *ngIf="patients$.value.length === 0" style="padding-top: 20px;">
@@ -96,6 +96,7 @@
           </div>
           <mat-action-row>
             <button mat-raised-button color="primary" (click)="addFoodToSection(i)">Agregar Alimento</button>
+            <button mat-raised-button color="primary" (click)="addFoodsByType(i)">Agregar Alimentos Por Tipo</button>
             <button mat-raised-button color="warn" (click)="deleteSection(i)">Eliminar Sección</button>
           </mat-action-row>
         </mat-expansion-panel>
@@ -109,6 +110,7 @@
       <a mat-raised-button color="basic" [routerLink]="[ '../' ]">Cancelar</a>
       <button *ngIf="!isEdit" mat-raised-button color="primary" (click)="createDiet()">Guardar</button>
       <button *ngIf="isEdit" mat-raised-button color="primary" (click)="updateDiet()">Actualizar</button>
+      <button *ngIf="isEdit" mat-raised-button color="primary" (click)="printDiet()">Imprimir</button>
     </div>
   </div>
 </div>
