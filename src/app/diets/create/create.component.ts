@@ -111,6 +111,13 @@ export class CreateComponent implements OnInit, OnDestroy {
     this.patients$.next(patients);
   }
 
+  deleteFoodFromSection(sectionIndex: number, foodIndex: number): void {
+    console.log(sectionIndex, foodIndex);
+    const newFoods = [...this.sections[sectionIndex].foods];
+    newFoods.splice(foodIndex, 1);
+    this.sections[sectionIndex].foods = newFoods;
+  }
+
   createDiet() {
     if (this.sections.length === 0 || this.patients$.value.length === 0) {
       this.showError = true;

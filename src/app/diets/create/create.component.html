@@ -32,7 +32,7 @@
     </div>
     <div>
       <mat-accordion multi>
-        <mat-expansion-panel expanded *ngFor="let section of sections; let i = index">
+        <mat-expansion-panel expanded *ngFor="let section of sections; let sectionIndex = index">
           <mat-expansion-panel-header>
             <mat-panel-title>
               <span class="mat-title">{{section.name}}</span>
@@ -80,9 +80,9 @@
           
               <ng-container matColumnDef="options">
                 <th mat-header-cell *matHeaderCellDef>Opciones</th>
-                <td mat-cell *matCellDef="let element">
+                <td mat-cell *matCellDef="let element; let foodIndex = index;">
                   <div fxLayout="row" fxLayoutGap="10px">
-                    <mat-icon color="primary">delete</mat-icon>
+                    <mat-icon color="primary" style="cursor: pointer;" (click)="deleteFoodFromSection(sectionIndex, foodIndex)">delete</mat-icon>
                   </div>
                 </td>
               </ng-container>
@@ -95,9 +95,9 @@
             </table>
           </div>
           <mat-action-row>
-            <button mat-raised-button color="primary" (click)="addFoodToSection(i)">Agregar Alimento</button>
-            <button mat-raised-button color="primary" (click)="addFoodsByType(i)">Agregar Alimentos Por Tipo</button>
-            <button mat-raised-button color="warn" (click)="deleteSection(i)">Eliminar Sección</button>
+            <button mat-raised-button color="primary" (click)="addFoodToSection(sectionIndex)">Agregar Alimento</button>
+            <button mat-raised-button color="primary" (click)="addFoodsByType(sectionIndex)">Agregar Alimentos Por Tipo</button>
+            <button mat-raised-button color="warn" (click)="deleteSection(sectionIndex)">Eliminar Sección</button>
           </mat-action-row>
         </mat-expansion-panel>
       </mat-accordion>
