@@ -18,6 +18,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { CaloriesCalculatorModule } from '../shared/calories-calculator/calories-calculator.module';
 import { MatCardModule } from '@angular/material/card';
 import { BulkLoadComponent } from './bulk-load/bulk-load.component';
+import { MatSelectModule } from '@angular/material/select';
+import { FoodTypeModule } from '../shared/food-type/food-type.module';
 
 const routes = [
   {
@@ -62,9 +64,11 @@ const routes = [
     MatIconModule,
     MatProgressSpinnerModule,
     MatCardModule,
+    MatSelectModule,
     FlexLayoutModule,
     LolaLayoutModule,
     CaloriesCalculatorModule,
+    FoodTypeModule,
   ]
 })
 export class FoodsModule { }

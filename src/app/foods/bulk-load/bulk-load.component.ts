@@ -27,6 +27,7 @@ export class BulkLoadComponent implements OnInit {
 
       for (const food of actualFoods) {
         delete food.calories;
+        food.name = food.name.charAt(0).toUpperCase() + food.name.slice(1).toLowerCase();
         food.description = '';
         food.servingSize = 100;
         food.servingSizeUnit = 'grams';

@@ -24,6 +24,19 @@
     </mat-form-field>
 
     <mat-form-field class="form-field" appearance="outline">
+      <mat-label>Tipo</mat-label>
+      <mat-select formControlName="type">
+        <mat-option *ngFor="let foodTypeValue of foodTypes" [value]="foodTypeValue">
+          {{foodTypeValue | foodType}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="createFoodForm.controls.type.touched || createFoodForm.controls.type.invalid">
+        <span *ngIf="createFoodForm.controls.type.errors?.required">El campo es obligatorio.</span>
+        <span *ngIf="createFoodForm.controls.type.errors?.pattern">El campo es inválido.</span>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-field" appearance="outline">
       <mat-label> Proteína </mat-label>
       <input matInput formControlName="protein">
       <mat-error *ngIf="createFoodForm.controls.protein.touched || createFoodForm.controls.protein.invalid">

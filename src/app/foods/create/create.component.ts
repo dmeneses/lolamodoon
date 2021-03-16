@@ -17,6 +17,7 @@ export class CreateComponent implements OnInit {
     id: new FormControl(''),
     name: new FormControl('', [Validators.required]),
     description: new FormControl(''),
+    type: new FormControl('protein'),
     protein: new FormControl(0, [Validators.required]),
     carbohydrate: new FormControl(0, [Validators.required]),
     fat: new FormControl(0, [Validators.required]),
@@ -24,7 +25,7 @@ export class CreateComponent implements OnInit {
     servingSize: new FormControl({value: 100, disabled: true}),
     servingSizeUnit: new FormControl({value: 'grams', disabled: true}),
   });
-
+  foodTypes = ['protein', 'fat', 'carbohydrate', 'vegetable'];
   calorieCount = 0;
   isEdit = false;
   loading$;

@@ -12,7 +12,7 @@ import { FoodsService } from '../../shared/foods-core/services/foods.service';
 })
 export class ListComponent implements OnInit {
 
-  displayedColumns: string[] = ['name', 'protein', 'carbohydrate', 'fat', 'fiber', 'calories', 'options',];
+  displayedColumns: string[] = ['name', 'type', 'protein', 'carbohydrate', 'fat', 'fiber', 'calories', 'options',];
   loading$: Observable<boolean>;
   foods$: Observable<Food[]>;
   noResults$: Observable<boolean>;
