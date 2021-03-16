@@ -93,7 +93,6 @@ export class PdfGenerator {
 
   static generateFoodTableHeader(name: string) {
     return `
-    <thead>
       <tr>
         <th colspan="7">${name}</th>
       </tr>
@@ -106,7 +105,6 @@ export class PdfGenerator {
         <th>Fibra</th>
         <th>Calorías</th>
       </tr>
-    </thead>
     `
   }
 

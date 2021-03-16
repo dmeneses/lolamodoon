@@ -15,7 +15,7 @@ import { FoodSelectorComponent } from '../food-selector/food-selector.component'
 })
 export class FoodByTypeSelectorComponent implements OnInit {
 
-  foodTypes = ['protein', 'fat', 'carbohydrate', 'vegetables'];
+  foodTypes = ['protein', 'fat', 'carbohydrate', 'vegetable'];
   filteredFoods: Food[];
   form = new FormGroup({
     foods: new FormControl([], Validators.required),

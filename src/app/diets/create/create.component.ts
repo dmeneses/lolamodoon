@@ -153,6 +153,7 @@ export class CreateComponent implements OnInit, OnDestroy {
   printDiet() {
     const patients = this.patients$.value;
     printJS({
+      repeatTableHeader: false,
       type: 'raw-html',
       printable: PdfGenerator.generatePDF(this.sections, patients[0]),
       style: PdfGenerator.generateStyles()
