@@ -3,6 +3,7 @@ export interface Food {
   id?: string;
   name: string;
   description?: string;
+  type: string;
   protein: number;
   carbohydrate: number;
   fat: number;

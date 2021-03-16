@@ -40,18 +40,6 @@
       </mat-error>
     </mat-form-field>
   </div>
-  <mat-form-field class="form-field" appearance="outline">
-    <mat-label>Tipo</mat-label>
-    <mat-select formControlName="foodType">
-      <mat-option *ngFor="let type of foodTypes" [value]="type">
-        {{getFoodTypeName(type)}}
-      </mat-option>
-    </mat-select>
-    <mat-error *ngIf="form.controls.foodType.touched || form.controls.foodType.invalid">
-      <span *ngIf="form.controls.foodType.errors?.required">El campo es obligatorio.</span>
-      <span *ngIf="form.controls.foodType.errors?.pattern">El campo es inválido.</span>
-    </mat-error>
-  </mat-form-field>
 
   <button type="submit" mat-raised-button color="primary">Añadir</button>
 </form>

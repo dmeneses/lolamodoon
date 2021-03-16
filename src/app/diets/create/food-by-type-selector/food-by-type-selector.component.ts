@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, OnInit, ɵɵsetComponentScope } from '@an
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { Observable, Subject, combineLatest } from 'rxjs';
-import { takeUntil, map } from 'rxjs/operators';
+import { takeUntil, map, switchMap, filter, first, tap, take } from 'rxjs/operators';
 import { CaloriesCalculatorPipe } from 'src/app/shared/calories-calculator/calories-calculator.pipe';
 import { FoodsService } from 'src/app/shared/foods-core/services/foods.service';
 import { Food } from 'src/app/shared/models/food';
@@ -15,7 +15,7 @@ import { FoodSelectorComponent } from '../food-selector/food-selector.component'
 })
 export class FoodByTypeSelectorComponent implements OnInit {
 
-  foodTypes = ['protein', 'fat', 'carbohydrate'];
+  foodTypes = ['protein', 'fat', 'carbohydrate', 'vegetables'];
   filteredFoods: Food[];
   form = new FormGroup({
     foods: new FormControl([], Validators.required),
@@ -31,19 +31,25 @@ export class FoodByTypeSelectorComponent implements OnInit {
 
   ngOnInit(): void {
     this.availableFoods$ = this.foodsService.foods$;
+    const filterFood = (foodType, shouldTakeAll) =>  this.availableFoods$
+      .pipe(
+        shouldTakeAll ? tap() : take(2),
+        map(foods => foods.filter(food => food.type === foodType))
+      );
     
-    // combineLatest([
-    //   this.form.controls.food.valueChanges,
-    //   this.availableFoods$
-    // ]).pipe(
-    //   takeUntil(this.unsubscribe$),
-    //   map(([foodName, foods]) => typeof foodName === 'string' ?
-    //     foods.filter(food => food.name.toLowerCase().includes(foodName.toLowerCase())) : []
-    //   )
-    // ).subscribe((results) => {
-    //   this.filteredFoods = results;
-    //   this.ref.detectChanges();
-    // });
+    filterFood('protein', false)
+      .subscribe((filteredFoods) => {
+        this.filteredFoods = filteredFoods;
+        this.ref.detectChanges();
+      });
+
+    this.form.get('foodType').valueChanges
+      .pipe(
+        takeUntil(this.unsubscribe$),
+        switchMap((foodType) => filterFood(foodType, true)
+      )).subscribe((filteredFoods) => {
+        this.filteredFoods = filteredFoods;
+      });
   }
 
   ngOnDestroy() {
@@ -66,12 +72,11 @@ export class FoodByTypeSelectorComponent implements OnInit {
 
     const { foods, calories, foodType } = this.form.getRawValue();
     const dietFoods = foods.map(food => {
-      console.log(food);
       const { protein, carbohydrate, fat, fiber, servingSizeUnit } = food;
       const originalServingSize = food.servingSize;
       const calorieCount = new CaloriesCalculatorPipe().transform(food);
       const newServingSize = Math.round(+calories *  originalServingSize / calorieCount);
-      console.log(newServingSize, calories, originalServingSize, calorieCount);
+
       return { 
         food,
         servingSize: newServingSize,
@@ -80,22 +85,10 @@ export class FoodByTypeSelectorComponent implements OnInit {
         carbohydrate: (carbohydrate * newServingSize) / originalServingSize,
         fat: (fat * newServingSize) / originalServingSize,
         fiber: (fiber * newServingSize) / originalServingSize,
-        foodType,
         calories: +calories
       };
     });
-    console.log(dietFoods);
-    this.bottomSheetRef.dismiss(dietFoods);
-  }
 
-  getFoodTypeName(foodType: string) {
-    switch (foodType) {
-      case 'protein':
-        return 'Proteína';
-      case 'carbohydrate':
-        return 'Carbohidrato';
-      case 'fat':
-        return 'Grasa';
-    }
+    this.bottomSheetRef.dismiss(dietFoods);
   }
 }

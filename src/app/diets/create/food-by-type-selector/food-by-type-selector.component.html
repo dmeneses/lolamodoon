@@ -7,7 +7,7 @@
       <mat-label>Tipo</mat-label>
       <mat-select formControlName="foodType">
         <mat-option *ngFor="let type of foodTypes" [value]="type">
-          {{getFoodTypeName(type)}}
+          {{ type | foodType }}
         </mat-option>
       </mat-select>
       <mat-error *ngIf="form.controls.foodType.touched || form.controls.foodType.invalid">
@@ -29,7 +29,7 @@
 
   <div class="food-list">
     <mat-selection-list formControlName="foods">
-      <mat-list-option *ngFor="let food of availableFoods$ | async" [value]="food">
+      <mat-list-option *ngFor="let food of filteredFoods" [value]="food">
         {{ food.name }}
       </mat-list-option>
     </mat-selection-list>

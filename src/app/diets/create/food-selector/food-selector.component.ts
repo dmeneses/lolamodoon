@@ -14,13 +14,11 @@ import { FoodMock } from 'src/app/shared/models/mocks/food-mock';
   styleUrls: ['./food-selector.component.scss']
 })
 export class FoodSelectorComponent implements OnInit {
-  foodTypes = ['protein', 'fat', 'carbohydrate'];
   filteredFoods: Food[];
   form = new FormGroup({
     food: new FormControl(null, Validators.required),
     servingSize: new FormControl(null, Validators.required),
     servingSizeUnit: new FormControl('grams', Validators.required),
-    foodType: new FormControl('protein', Validators.required),
   });
   availableFoods$: Observable<Food[]>;
   unsubscribe$ = new Subject();
@@ -88,7 +86,7 @@ export class FoodSelectorComponent implements OnInit {
       return;
     }
 
-    const { food, servingSize, servingSizeUnit, foodType } = this.form.getRawValue();
+    const { food, servingSize, servingSizeUnit } = this.form.getRawValue();
     const { protein, carbohydrate, fat, fiber } = food;
     const originalServingSize = food.servingSize;
     const dietFood = { 
@@ -99,22 +97,10 @@ export class FoodSelectorComponent implements OnInit {
       carbohydrate: (carbohydrate * servingSize) / originalServingSize,
       fat: (fat * servingSize) / originalServingSize,
       fiber: (fiber * servingSize) / originalServingSize,
-      foodType,
       calories: 0
     };
     dietFood.calories = dietFood.protein*2 + dietFood.carbohydrate*4 + dietFood.fat*9;
 
     this.bottomSheetRef.dismiss(dietFood);
-  }
-
-  getFoodTypeName(foodType: string) {
-    switch (foodType) {
-      case 'protein':
-        return 'Proteína';
-      case 'carbohydrate':
-        return 'Carbohidrato';
-      case 'fat':
-        return 'Grasa';
-    }
   }
 }

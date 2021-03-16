@@ -26,6 +26,7 @@ import { DietFirestoreService } from './services/diet.firestore.service';
 import { DietsPageStoreService } from './services/diets-page.store.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FoodByTypeSelectorComponent } from './create/food-by-type-selector/food-by-type-selector.component';
+import { FoodTypeModule } from '../shared/food-type/food-type.module';
 
 
 const routes = [
@@ -75,6 +76,7 @@ const routes = [
     MatProgressSpinnerModule,
     FlexLayoutModule,
     LolaLayoutModule,
+    FoodTypeModule,
   ],
   providers: [
     DietsService,

@@ -21,7 +21,6 @@ export interface DietFood {
   fat?: number;
   fiber?: number;
   calories?: number;
-  foodType?: string;
   servingSize: number;
   servingSizeUnit: string;
 }

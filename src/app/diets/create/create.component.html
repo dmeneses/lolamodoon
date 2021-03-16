@@ -89,9 +89,10 @@
           
               <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
               <tr mat-row *matRowDef="let row; columns: displayedColumns;"
-                [class.protein-color]="row.foodType==='protein'"
-                [class.carbohydrate-color]="row.foodType==='carbohydrate'"
-                [class.fat-color]="row.foodType==='fat'"></tr>
+                [class.protein-color]="row.food.type==='protein'"
+                [class.carbohydrate-color]="row.food.type==='carbohydrate'"
+                [class.fat-color]="row.food.type==='fat'"
+                [class.vegetable-color]="row.food.type==='vegetable'"></tr>
             </table>
           </div>
           <mat-action-row>
