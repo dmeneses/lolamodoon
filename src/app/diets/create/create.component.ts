@@ -5,7 +5,6 @@ import * as printJS from 'print-js';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Diet, DietFood, DietSection } from 'src/app/shared/models/diet';
-import { Food } from 'src/app/shared/models/food';
 import { Patient } from 'src/app/shared/models/patient';
 import { PdfGenerator } from 'src/app/shared/models/pdf-generator';
 import { PatientsService } from 'src/app/shared/patients-core/services/patients.service';
@@ -78,7 +77,15 @@ export class CreateComponent implements OnInit, OnDestroy {
     const ref = this.bottomSheet.open<FoodSelectorComponent, any, DietFood>(FoodSelectorComponent);
     ref.afterDismissed().subscribe((food: DietFood) => {
       if (food) {
-        this.sections[index].foods = [...this.sections[index].foods, food];
+        const newFoodsForSection = [...this.sections[index].foods, food]
+          .reduce((groups, dietFood) => {
+            groups[dietFood.food.type] = groups[dietFood.food.type].concat([dietFood])
+              .sort((dietFoodA, dietFoodB) => dietFoodA.food.name > dietFoodB.food.name ? 1 : dietFoodA.food.name < dietFoodB.food.name ?  -1 : 0);
+          
+            return groups;
+          }, { protein: [], carbohydrate: [], fat: [], vegetable: [] })
+
+        this.sections[index].foods = [].concat.apply([], Object.values(newFoodsForSection));
       }
     });
   }
@@ -87,7 +94,15 @@ export class CreateComponent implements OnInit, OnDestroy {
     const ref = this.bottomSheet.open<FoodByTypeSelectorComponent, any, DietFood[]>(FoodByTypeSelectorComponent);
     ref.afterDismissed().subscribe((foods: DietFood[]) => {
       if (foods) {
-        this.sections[index].foods = [...this.sections[index].foods, ...foods];
+        const newFoodsForSection = [...this.sections[index].foods, ...foods]
+          .reduce((groups, dietFood) => {
+            groups[dietFood.food.type] = groups[dietFood.food.type].concat([dietFood])
+              .sort((dietFoodA, dietFoodB) => dietFoodA.food.name > dietFoodB.food.name ? 1 : dietFoodA.food.name < dietFoodB.food.name ?  -1 : 0);
+           
+            return groups;
+          }, { protein: [], carbohydrate: [], fat: [], vegetable: [] })
+
+        this.sections[index].foods = [].concat.apply([], Object.values(newFoodsForSection));
       }
     });
   }

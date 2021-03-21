@@ -71,7 +71,7 @@ export class FoodByTypeSelectorComponent implements OnInit {
       return;
     }
 
-    const { foods, calories, foodType } = this.form.getRawValue();
+    const { foods, calories } = this.form.getRawValue();
     const dietFoods = foods.map(food => {
       const { protein, carbohydrate, fat, fiber, servingSizeUnit } = food;
       const originalServingSize = food.servingSize;
