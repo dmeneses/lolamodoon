@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { filter, find, map, switchMap } from 'rxjs/operators';
-import { CaloriesCalculatorPipe } from 'src/app/shared/calories-calculator/calories-calculator.pipe';
-import { Food } from 'src/app/shared/models/food';
+
+import { CaloriesCalculatorPipe } from '../../shared/calories-calculator/calories-calculator.pipe';
+import { Food, FoodCreator } from '../../shared/models/food';
+import { FoodType } from '../../shared/models/food-type';
 import { FoodsService } from '../../shared/foods-core/services/foods.service';
 
 @Component({
@@ -17,7 +18,7 @@ export class CreateComponent implements OnInit {
     id: new FormControl(''),
     name: new FormControl('', [Validators.required]),
     description: new FormControl(''),
-    type: new FormControl('protein'),
+    type: new FormControl(FoodType.protein),
     protein: new FormControl(0, [Validators.required]),
     carbohydrate: new FormControl(0, [Validators.required]),
     fat: new FormControl(0, [Validators.required]),
@@ -25,7 +26,7 @@ export class CreateComponent implements OnInit {
     servingSize: new FormControl({value: 100, disabled: true}),
     servingSizeUnit: new FormControl({value: 'grams', disabled: true}),
   });
-  foodTypes = ['protein', 'fat', 'carbohydrate', 'vegetable'];
+  foodTypes = Object.keys(FoodType);
   calorieCount = 0;
   isEdit = false;
   loading$;
@@ -55,7 +56,7 @@ export class CreateComponent implements OnInit {
 
   saveFood() {
     if (this.createFoodForm.valid) {
-      const food = this.createFoodForm.getRawValue();
+      const food = FoodCreator.createFoodFromFormValue(this.createFoodForm.getRawValue());
       this.foodService.create(food)
         .then(() => this.router.navigate(['foods']));
     }
@@ -63,7 +64,7 @@ export class CreateComponent implements OnInit {
 
   updateFood() {
     if (this.createFoodForm.valid) {
-      const food = this.createFoodForm.getRawValue();
+      const food = FoodCreator.createFoodFromFormValue(this.createFoodForm.getRawValue());
       this.foodService.update(food)
         .then(() => this.router.navigate(['foods']));
     }

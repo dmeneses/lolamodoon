@@ -12,7 +12,7 @@ export class FoodsService {
     private firestore: FoodFirestoreService,
     private store: FoodsPageStoreService
   ) {
-    this.firestore.collection$().pipe(
+    this.firestore.collection$(ref => ref.orderBy('name')).pipe(
       tap(foods => {
         this.store.patch({
           loading: false,

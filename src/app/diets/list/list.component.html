@@ -24,6 +24,11 @@
       <td mat-cell *matCellDef="let element"> {{element.dietSections?.length}} </td>
     </ng-container>
 
+    <ng-container matColumnDef="updatedDate">
+      <th mat-header-cell *matHeaderCellDef> Ultima Actualizacion </th>
+      <td mat-cell *matCellDef="let element"> {{element.updatedDate?.toDate() | date }} </td>
+    </ng-container>
+
     <ng-container matColumnDef="options">
       <th mat-header-cell *matHeaderCellDef>Opciones</th>
       <td mat-cell *matCellDef="let element">

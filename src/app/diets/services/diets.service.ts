@@ -11,7 +11,7 @@ export class DietsService {
     private firestore: DietFirestoreService,
     private store: DietsPageStoreService
   ) {
-    this.firestore.collection$().pipe(
+    this.firestore.collection$(ref => ref.orderBy('updatedDate')).pipe(
       tap(diets => {
         this.store.patch({
           loading: false,

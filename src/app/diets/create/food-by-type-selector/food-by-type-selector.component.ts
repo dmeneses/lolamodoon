@@ -6,6 +6,7 @@ import { takeUntil, map, switchMap, filter, first, tap, take } from 'rxjs/operat
 import { CaloriesCalculatorPipe } from 'src/app/shared/calories-calculator/calories-calculator.pipe';
 import { FoodsService } from 'src/app/shared/foods-core/services/foods.service';
 import { Food } from 'src/app/shared/models/food';
+import { FoodType } from 'src/app/shared/models/food-type';
 import { FoodSelectorComponent } from '../food-selector/food-selector.component';
 
 @Component({
@@ -15,12 +16,12 @@ import { FoodSelectorComponent } from '../food-selector/food-selector.component'
 })
 export class FoodByTypeSelectorComponent implements OnInit {
 
-  foodTypes = ['protein', 'fat', 'carbohydrate', 'vegetable'];
+  foodTypes = Object.keys(FoodType);
   filteredFoods: Food[];
   form = new FormGroup({
     foods: new FormControl([], Validators.required),
     calories: new FormControl(null, Validators.required),
-    foodType: new FormControl('protein', Validators.required),
+    foodType: new FormControl(FoodType.protein, Validators.required),
   });
   availableFoods$: Observable<Food[]>;
   unsubscribe$ = new Subject();

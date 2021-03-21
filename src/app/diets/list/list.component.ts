@@ -11,7 +11,7 @@ import { DietsService } from '../services/diets.service';
 })
 export class ListComponent implements OnInit {
 
-  displayedColumns: string[] = ['name', 'patientsCount', 'sectionsCount', 'options'];
+  displayedColumns: string[] = ['name', 'patientsCount', 'sectionsCount', 'updatedDate', 'options'];
   searchForm = new FormGroup({
     search: new FormControl('')
   });

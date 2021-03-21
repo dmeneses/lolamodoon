@@ -12,7 +12,7 @@ export class PatientsService {
     private firestore: PatientsFirestoreService,
     private store: PatientsPageStoreService
   ) {
-    this.firestore.collection$().pipe(
+    this.firestore.collection$(ref => ref.orderBy('name')).pipe(
       tap(patients => {
         this.store.patch({
           loading: false,
