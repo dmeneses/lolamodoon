@@ -111,6 +111,7 @@ export class PdfGenerator {
   static generateStyles() {
     return `
     @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap');
+    @page { size: Letter landscape; }
 
     body {
       font-family: Roboto, "Helvetica Neue", sans-serif;

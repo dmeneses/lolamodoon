@@ -99,7 +99,7 @@ export class FoodSelectorComponent implements OnInit {
       fiber: (fiber * servingSize) / originalServingSize,
       calories: 0
     };
-    dietFood.calories = dietFood.protein*2 + dietFood.carbohydrate*4 + dietFood.fat*9;
+    dietFood.calories = new CaloriesCalculatorPipe().transform(dietFood);
 
     this.bottomSheetRef.dismiss(dietFood);
   }
