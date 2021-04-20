@@ -88,15 +88,16 @@ export class PdfGenerator {
         `, '')}
         </table>
       </div>
-
-      <div>
-        <h4>
-          Notas y Recomendaciones
-        </h4>
-        <ul>
-          ${notes.map(note => ` <li>${note.note}</li> `).join('')}
-        </ul>
-      </div>
+      ${notes?.length > 0 ? 
+        `<div>
+          <h4>
+            Notas y Recomendaciones
+          </h4>
+          <ul>
+            ${notes.map(note => ` <li>${note.note}</li> `).join('')}
+          </ul>
+        </div>` : ''
+      }
     `
   }
 
