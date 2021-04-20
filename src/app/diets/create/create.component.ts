@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { Router, ActivatedRoute } from '@angular/router';
 import * as printJS from 'print-js';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { Diet, DietFood, DietSection } from 'src/app/shared/models/diet';
+import { Diet, DietFood, DietNote, DietSection } from 'src/app/shared/models/diet';
 import { Patient } from 'src/app/shared/models/patient';
 import { PdfGenerator } from 'src/app/shared/models/pdf-generator';
 import { PatientsService } from 'src/app/shared/patients-core/services/patients.service';
@@ -25,6 +26,7 @@ export class CreateComponent implements OnInit, OnDestroy {
     { name: 'Almuerzo', foods: [] },
     { name: 'Cena', foods: [] }
   ];
+  notes: DietNote[] = [];
   displayedColumns: string[] = ['name', 'servingSize', 'protein', 'carbohydrate', 'fat', 'fiber', 'calories', 'options',];
   patientsLoading$: Observable<boolean>;
   dietsLoading$: Observable<boolean>;
@@ -32,6 +34,10 @@ export class CreateComponent implements OnInit, OnDestroy {
   showError = false;
   isEdit = false;
   currentDiet: Diet;
+
+  notesFormGroup = new FormGroup({
+    note: new FormControl('', Validators.required),
+  });
 
   constructor(private bottomSheet: MatBottomSheet, private patientsService: PatientsService,
     private dietsService: DietsService,
@@ -50,6 +56,7 @@ export class CreateComponent implements OnInit, OnDestroy {
         if (diet) {
           this.currentDiet = diet;
           this.sections = diet.dietSections;
+          this.notes = diet.notes || [];
           this.patientsService
             .getFilteredDietPatients(diet.patientsIds)
             .pipe(takeUntil(this.unsubscribe$))
@@ -107,6 +114,20 @@ export class CreateComponent implements OnInit, OnDestroy {
     });
   }
 
+  addDietNote(): void {
+    const { note } = this.notesFormGroup.value;
+
+    if (this.notesFormGroup.valid && note) {
+      this.notes.push({ note, createdDate: new Date() });
+      this.notesFormGroup.reset();
+      this.notesFormGroup.markAsPristine();
+    }
+  }
+
+  deleteNote(index: number) {
+    this.notes.splice(index, 1);
+  }
+
   deleteSection(index: number): void {
     this.sections.splice(index, 1);
   }
@@ -143,6 +164,7 @@ export class CreateComponent implements OnInit, OnDestroy {
       name: `Dieta para: ${this.patients$.value.map(patient => patient.name).join(', ')}`,
       patientsIds: this.patients$.value.map(patient => patient.id),
       dietSections: this.sections,
+      notes: this.notes,
     }).then(() => {
       this.router.navigate(['diets']);
     });
@@ -160,6 +182,7 @@ export class CreateComponent implements OnInit, OnDestroy {
       name: `Dieta para: ${this.patients$.value.map(patient => patient.name).join(', ')}`,
       patientsIds: this.patients$.value.map(patient => patient.id),
       dietSections: this.sections,
+      notes: this.notes,
     }).then(() => {
       this.router.navigate(['diets']);
     });
@@ -170,7 +193,7 @@ export class CreateComponent implements OnInit, OnDestroy {
     printJS({
       repeatTableHeader: false,
       type: 'raw-html',
-      printable: PdfGenerator.generatePDF(this.sections, patients[0]),
+      printable: PdfGenerator.generatePDF(this.sections, patients[0], this.notes),
       style: PdfGenerator.generateStyles()
     });
   }

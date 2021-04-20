@@ -26,3 +26,14 @@
 .create-diet {
   padding-bottom: 60px;
 }
+
+::ng-deep .mat-list-item-content {
+  padding: 0px !important;
+}
+
+::ng-deep .mat-form-field {
+  display: inline-block;
+  position: relative;
+  text-align: left;
+  width: 400px;
+}

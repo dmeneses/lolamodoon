@@ -28,7 +28,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FoodByTypeSelectorComponent } from './create/food-by-type-selector/food-by-type-selector.component';
 import { FoodTypeModule } from '../shared/food-type/food-type.module';
 
-
 const routes = [
   {
     path: '',

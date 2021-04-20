@@ -7,6 +7,13 @@ export interface Diet {
   dietSections: DietSection[];
   createdDate?: Date;
   updatedDate?: Date;
+  notes: DietNote[]
+}
+
+export interface DietNote {
+  note: string;
+  createdDate?: Date;
+  updatedDate?: Date;
 }
 
 export interface DietSection {

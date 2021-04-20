@@ -104,6 +104,46 @@
       </mat-accordion>
     </div>
   </div>
+
+  <div fxLayout="column" *ngIf="(dietsLoading$ | async) === false && (patientsLoading$ | async) === false">
+    <div fxLayoutAlign="space-between start">
+      <span class="mat-title">Notas y Recomendaciones</span>
+    </div>
+    <div>
+      <mat-accordion multi>
+        <mat-expansion-panel expanded>
+          <mat-expansion-panel-header></mat-expansion-panel-header>
+          <div>
+            <form class="notes-form" [formGroup]="notesFormGroup" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+              <div>
+                <mat-form-field appearance="fill">
+                  <input matInput placeholder="Nueva nota..." formControlName="note">
+                </mat-form-field>
+                <mat-error *ngIf="notesFormGroup.controls.note.touched && notesFormGroup.controls.note.invalid">
+                  <span *ngIf="notesFormGroup.controls.note.errors?.required">El campo es obligatorio.</span>
+                </mat-error>
+              </div>
+              <button mat-raised-button color="primary" type="submit" (click)="addDietNote()">Añadir</button>
+            </form>
+          </div>
+          <div *ngIf="notes?.length === 0" style="padding-top: 20px;">
+            <span class="mat-subheading-2">No existen notas o recomendaciones para esta dieta.</span>
+          </div>
+          <div fxLayout="column" fxLayoutAlign="start stretch" *ngIf="notes?.length > 0">
+            <mat-list>
+              <mat-list-item *ngFor="let note of notes; let noteIndex = index"> 
+                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+                  <mat-icon color="warn" style="cursor: pointer;" (click)="deleteNote(noteIndex)">delete</mat-icon>
+                  <span>{{note.note}}</span>
+                </div>
+              </mat-list-item>
+            </mat-list>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </div>
+
   <div class="footer" fxLayout="column" *ngIf="(dietsLoading$ | async) === false && (patientsLoading$ | async) === false">
     <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="10px">
       <div *ngIf="showError" class="mat-warn">Tiene que agregar al menos un paciente y una sección.</div>

@@ -1,8 +1,8 @@
-import { DietFood, DietSection } from "./diet";
+import { DietNote, DietSection } from "./diet";
 import { Patient } from "./patient";
 
 export class PdfGenerator {
-  static generatePDF(sections: DietSection[], patient: Patient) {
+  static generatePDF(sections: DietSection[], patient: Patient, notes: DietNote[]) {
     const modifiedWeight = +patient.weight * 2.20462;
     const maintenanceCalories = modifiedWeight * 10 * +patient.activityLevelMeasure;
     
@@ -87,6 +87,15 @@ export class PdfGenerator {
           </tbody>
         `, '')}
         </table>
+      </div>
+
+      <div>
+        <h4>
+          Notas y Recomendaciones
+        </h4>
+        <ul>
+          ${notes.map(note => ` <li>${note.note}</li> `).join('')}
+        </ul>
       </div>
     `
   }
