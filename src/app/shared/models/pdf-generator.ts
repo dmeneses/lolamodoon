@@ -2,7 +2,7 @@ import { DietNote, DietSection } from "./diet";
 import { Patient } from "./patient";
 
 export class PdfGenerator {
-  static generatePDF(sections: DietSection[], patient: Patient, notes: DietNote[]) {
+  static generatePDF(sections: DietSection[], patient: Patient, notes: DietNote[], macros) {
     const modifiedWeight = +patient.weight * 2.20462;
     const maintenanceCalories = modifiedWeight * 10 * +patient.activityLevelMeasure;
     
@@ -21,6 +21,20 @@ export class PdfGenerator {
       + (patient.gender === 'male' ? +5 : -161);
     
     return `
+      <div class="portrait">
+        <div class="portrait-title">
+          <img class="portrait-logo" src="../../assets/images/lola-logo.jpeg"/>
+          <div>
+            <h1>Lola Modo On</h1>
+            <h2>NUTRICIÓN INTEGRAL</h2>
+          </div>
+        </div>
+        <div class="portrait-subtitle">
+          <div>
+            <h2>ASESORIAS DE SALUD</h2>
+          </div>
+        </div>
+      </div>
       <div class="header">
         <img class="logo" src="../../assets/images/lola-logo.jpeg"/>
         <div class="title">
@@ -57,13 +71,35 @@ export class PdfGenerator {
             </tr>
           </tbody>
         </table>
+        <table style="margin-top: 20px">
+          <thead>
+            <tr>
+              <th colspan="3">Macronutrientes diarios en base a objetivos</th>
+            </tr>
+            <tr>
+              <th>Proteinas</th>
+              <th>Carbohidratos</th>
+              <th>Grasas</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>` + macros.protein + `</td>
+              <td>` + macros.carbohidrate + `</td>
+              <td>` + macros.fat + `%</td>
+            </tr>
+            <tr>
+              <td>` + macros.macrosProteinLow + 'g - ' + macros.macrosProteinTop + `g</td>
+              <td>` + macros.macrosCarbsLow + 'g - ' + macros.macrosCarbsTop + `g</td>
+              <td>` + macros.macrosFatLow + 'g - ' + macros.macrosFatTop + `g</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-
 
       <p class="carb-row info-message">Elegir un alimento de cada color, respetando las cantidades, en caso de elegir 2 carbohidratos toma la mitad de gramos de cada uno.</p>
       <p class="protein-row info-message">Las PROTEINAS se pesan en crudo, los carbohidratos tienes ambas opciones, crudo y cocido.</p>
       <p class="warn-row info-message">IMPORTANTE!! TANTO EL ALMUERZO COMO LA CENA INGRESAR 200 GRS DE VERDURAS EN CADA UNA.</p>
-
 
       <div>
         <table class="food-table">
@@ -201,6 +237,31 @@ export class PdfGenerator {
     .info-message {
       padding: 10px;
       border: 1px solid #000;
+    }
+    .portrait {
+      width: 100%;
+      height: 450px;
+      background-image: url("../../assets/images/lola-background_2.png");
+      margin-top: 0px;
+      margin-bottom: 0px;
+      padding-top: 250px;
+      color: #fff;
+    }
+    .portrait-logo {
+      padding-right: 10px;
+      width: 100px;
+    }
+    .portrait-title {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+    }
+    .portrait-subtitle {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
     }`
   }
 }

@@ -189,13 +189,47 @@ export class CreateComponent implements OnInit, OnDestroy {
   }
 
   printDiet() {
-    const patients = this.patients$.value;
+    const patient = this.patients$.value[0];
+    const modifiedWeight = +patient.weight * 2.20462;
+    const maintenanceCalories = modifiedWeight * 10 * +patient.activityLevelMeasure;
+    let targetCalories;
+    let refeedTargetCalories;
+    let dietDeficit;
+    if (patient.dietGoal === 'muscle-gain') {
+      targetCalories = maintenanceCalories 
+        + ((modifiedWeight * +patient.dietGoalPace * 3500) / 4 / 7);
+    } else {
+      refeedTargetCalories = maintenanceCalories;
+      targetCalories = maintenanceCalories 
+        - (3500 * modifiedWeight * +patient.dietGoalPace) / (7 - +patient.refeedsPerWeek);
+      dietDeficit = 3500 * modifiedWeight * +patient.dietGoalPace;
+    }
+    const modifiedProtein = +patient.proteinAmount / 2.20462;
+    const macrosFat = this.roundTo((targetCalories * (+patient.fatPercentage / 100))  / 9);
+    const macrosProtein = this.roundTo(modifiedWeight * modifiedProtein);
+    const macrosCarbs = this.roundTo((targetCalories - (4 * macrosProtein) - (9 * macrosFat)) / 4);
+    const macros = {
+      macrosCarbsLow: macrosCarbs - 10,
+      macrosCarbsTop: macrosCarbs + 10,
+      macrosProteinLow: macrosProtein - 10,
+      macrosProteinTop: macrosProtein + 10,
+      macrosFatLow: macrosFat - 10,
+      macrosFatTop: macrosFat + 10,
+      protein: patient.proteinAmount,
+      fat: patient.fatPercentage,
+      carbohidrate: patient.activityLevelMeasure,
+    }
+
     printJS({
       repeatTableHeader: false,
       type: 'raw-html',
-      printable: PdfGenerator.generatePDF(this.sections, patients[0], this.notes),
+      printable: PdfGenerator.generatePDF(this.sections, patient, this.notes, macros),
       style: PdfGenerator.generateStyles()
     });
+  }
+
+  roundTo(number, roundto = 5) {
+    return roundto * Math.round(number / roundto);
   }
 }
 

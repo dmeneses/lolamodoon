@@ -12,4 +12,6 @@ export interface Patient {
   dietGoal: string;
   dietGoalPace: number;
   refeedsPerWeek: number;
+  proteinAmount: number;
+  fatPercentage: string;
 }
